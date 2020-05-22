@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@mipmap/home_normal"
+        android:title="@string/text_navigation_home" />
+
+    <item
+        android:id="@+id/nav_list"
+        android:icon="@mipmap/list_normal"
+        android:title="@string/text_navigation_list"/>
+
+    <item
+        android:id="@+id/nav_store"
+        android:icon="@mipmap/store_normal"
+        android:title="@string/text_navigation_store"/>
+
+
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@mipmap/setting_normal"
+        android:title="@string/text_navigation_me"/>
+
+</menu>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/include_store_pager_title_part"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/text_list_filter_type"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+
+    <com.example.receiptsbooks.ui.custom.TextFlowLayout
+        android:id="@+id/list_product_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:horizontalSpace="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:verticalSpace="10dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/text_list_filter_date_section"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_product_type" />
+
+    <LinearLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="2dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+        <TextView
+            android:id="@+id/list_tv_filter_begin_time"
+            android:layout_width="80dp"
+            android:layout_height="26dp"
+            android:gravity="center"
+            android:background="@drawable/shape_list_filter_bg_date_text"
+            android:text="@string/text_list_filter_begin_date_hint" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="20dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/shape_list_filter_line" />
+
+        <TextView
+            android:id="@+id/list_tv_filter_end_time"
+            android:layout_width="80dp"
+            android:layout_height="26dp"
+            android:gravity="center"
+            android:background="@drawable/shape_list_filter_bg_date_text"
+            android:text="@string/text_list_filter_end_date_hint" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="36dp">
+
+        <TextView
+            android:id="@+id/list_filter_btn_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/list_btn_reset_confirm_line"
+            android:background="@drawable/shape_list_bg_reset"
+            android:text="@string/text_list_filter_reset_btn"
+            android:textSize="14sp" />
+
+        <View
+            android:id="@+id/list_btn_reset_confirm_line"
+            android:layout_width="1dp"
+            android:layout_height="29dp"
+            android:layout_toStartOf="@+id/list_filter_btn_confirm"
+            android:background="#000000"/>
+
+        <TextView
+            android:id="@+id/list_filter_btn_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/shape_list_bg_confirm"
+            android:text="@string/text_list_filter_confirm_btn"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

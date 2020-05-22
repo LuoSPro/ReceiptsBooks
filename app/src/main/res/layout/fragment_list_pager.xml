@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPagerBg"
+    android:gravity="center">
+
+    <ExpandableListView
+        android:id="@+id/list_pager_content_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp"
+        android:dividerHeight="6dp"
+        android:groupIndicator="@null"
+        android:divider="@null"
+        android:background="@color/colorPagerBg">
+    </ExpandableListView>
+
+</LinearLayout>

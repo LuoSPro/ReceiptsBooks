@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/list_btn_tab"
+            app:tabMode="scrollable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toStartOf="@+id/list_btn_filter"
+            app:tabBackground="@color/colorPrimaryDark"
+            app:tabTextColor="@color/colorTabNormal"
+            app:tabSelectedTextColor="@color/colorTabSelected"
+            app:tabRippleColor="@color/colorTabNormal"
+            app:tabIndicatorColor="@color/colorTabSelected"/>
+
+        <ImageView
+            android:id="@+id/list_btn_filter"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="-2dp"
+            android:background="@color/colorPrimaryDark"
+            android:elevation="10dp"
+            android:padding="5dp"
+            android:src="@mipmap/filter_icon" />
+
+    </RelativeLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/list_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never" />
+
+</LinearLayout>

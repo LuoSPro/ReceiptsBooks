@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">小票助手</string>
+    <string name="permission_request_denied">Permission request denied</string>
+    <string name="text_navigation_home">首页</string>
+    <string name="text_navigation_store">领卷</string>
+    <string name="text_navigation_me">设置</string>
+    <string name="text_navigation_list">清单</string>
+    <string name="text_home_camera_info">提取</string>
+    <string name="text_home_extract_records">提取记录</string>
+    <string name="text_network_error_tips">网络出错，请点击重试...</string>
+    <string name="text_analysis_error_tips">图片解析失败,请点击重试...</string>
+    <string name="text_analysis_error_tips_reason">可能原因:"\n"1.照片模糊或拍摄角度不对"\n"2.上传的照片不是小票"\n"3.服务器崩溃...</string>
+    <string name="text_loading_tips">数据提取中...</string>
+    <string name="text_goods_off_prise">省%1$d元</string>
+    <string name="text_goods_original_prise">￥%1$s</string>
+    <string name="text_goods_sell_count">%1$d人已经购买</string>
+    <string name="text_search_cancel">取消</string>
+    <string name="text_search_hint">搜你想搜的...宝贝</string>
+    <string name="text_search_history">历史记录</string>
+
+    <string name="text_history_item_total_price">总额: %1$.2f元</string>
+    <string name="text_history_item_product_count">商品数量: %1$d</string>
+
+
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="hour">时</string>
+    <string name="minute">分</string>
+    <string name="text_list_filter_begin_date_hint">起始时间</string>
+    <string name="text_list_filter_end_date_hint">截止时间</string>
+    <string name="text_list_filter_confirm_btn">确定</string>
+    <string name="text_list_filter_reset_btn">重置</string>
+    <string name="text_list_filter_date_section">时间区间</string>
+    <string name="text_list_filter_type">类型</string>
+    <string name="text_ticket_title">淘口令</string>
+    <string name="text_ticket_load_erroe">加载出错，请点击重试</string>
+    <string name="text_ticket_confirm">领卷</string>
+    <string name="text_list_title">小票清单</string>
+    <string name="text_store_title">领卷联盟</string>
+    <string name="text_store_search_hint">搜你想搜的...宝贝</string>
+    <string name="text_date_picker_title">选择时间</string>
+    <string name="text_date_picker_confirm">确认</string>
+    <string name="text_receipt_info_modify_hint">信息不准?点击此处进行修改</string>
+    <string name="text_histories_record">历史记录</string>
+    <string name="text_receipt_details_date_hint">年/月/日</string>
+</resources>

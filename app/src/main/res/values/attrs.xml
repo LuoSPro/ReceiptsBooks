@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="AutoLoopStyle">
+        <attr name="duration" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="FlowTextStyle">
+        <attr name="horizontalSpace" format="dimension"/>
+        <attr name="verticalSpace" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="WheelView">
+        <attr name="WheelStyle" format="reference" />
+        <attr name="WheelDateTimeStyle" format="reference" />
+        <attr name="WheelLinkageStyle" format="reference" />
+
+        <attr name="wheel_itemDefaultPosition" format="integer" />
+        <attr name="wheel_itemTextSize" format="dimension" />
+        <attr name="wheel_itemTextColor" format="color" />
+        <attr name="wheel_itemTextColorSelected" format="color" />
+        <attr name="wheel_itemSpace" format="dimension" />
+        <attr name="wheel_itemAlign" format="enum">
+            <enum name="center" value="0" />
+            <enum name="left" value="1" />
+            <enum name="right" value="2" />
+        </attr>
+        <attr name="wheel_itemVisibleCount" format="integer" />
+        <attr name="wheel_hasSameWidth" format="boolean" />
+        <attr name="wheel_maxWidthText" format="string" />
+        <attr name="wheel_maxWidthTextPosition" format="integer" />
+        <attr name="wheel_cyclic" format="boolean" />
+        <attr name="wheel_indicator" format="boolean" />
+        <attr name="wheel_indicatorColor" format="color" />
+        <attr name="wheel_indicatorSize" format="dimension" />
+        <attr name="wheel_curtain" format="boolean" />
+        <attr name="wheel_curtainColor" format="color" />
+        <attr name="wheel_atmospheric" format="boolean" />
+        <attr name="wheel_curved" format="boolean" />
+    </declare-styleable>
+
+
+    <declare-styleable name="PieChartView">
+        <attr name="circleRadius" format="dimension" />
+        <attr name="textSize" format="dimension" />
+        <attr name="exampleDrawable" format="color|reference" />
+    </declare-styleable>
+
+</resources>

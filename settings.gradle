@@ -1,0 +1,2 @@
+include ':app', ':refreshlibrary'
+rootProject.name='ReceiptDemoOne'

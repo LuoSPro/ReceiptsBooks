@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:gravity="center_horizontal"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimaryDark">
+
+        <ImageView
+            android:id="@+id/ticket_back_press"
+            android:src="@mipmap/back"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:text="@string/text_ticket_title"
+            android:textSize="14sp"
+            android:layout_centerInParent="true"
+            android:textColor="@color/colorWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="33dp"
+        android:background="@color/gray">
+
+        <ImageView
+            android:src="@mipmap/no_image"
+            android:id="@+id/ticket_cover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.example.receiptsbooks.ui.custom.LoadingView
+            android:id="@+id/ticket_cover_loading"
+            android:layout_centerInParent="true"
+            android:layout_width="55dp"
+            android:layout_height="55dp"/>
+
+        <TextView
+            android:id="@+id/ticket_load_retry"
+            android:text="@string/text_ticket_load_erroe"
+            android:textSize="14sp"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/ticket_code"
+        android:background="@drawable/shape_ticket_code_box_bg"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:textColor="#4A4A4A"
+        android:focusable="false"
+        android:layout_width="244dp"
+        android:layout_height="40dp"/>
+
+    <TextView
+        android:id="@+id/ticket_copy_or_open_btn"
+        android:text="@string/text_ticket_confirm"
+        android:textSize="18sp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:background="@drawable/shape_button_box_bg"
+        android:layout_width="141dp"
+        android:layout_height="40dp"/>
+
+</LinearLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3791F8</color>
+    <color name="colorAccent">#59A7FF</color>
+
+
+    <color name="gray">#808080</color>
+    <color name="receiptInfoItemGray">#D6FFFEFE</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorLightBlack">#707070</color>
+    <color name="colorGray">#7B7B7B</color>
+    <color name="colorGrayProductType">#E4E4E4</color>
+    <color name="bgCameraColor">#1878FF</color>
+    <color name="bgRecordBtn">#4C9BFD</color>
+    <color name="colorTabNormal">#aaffffff</color>
+    <color name="colorTabSelected">#ffffff</color>
+    <color name="colorTmall">#D0021B</color>
+    <color name="colorPageBg">#EEEEEE</color>
+
+<!--    <color name="colorMainBlue">#39C2D0</color>-->
+    <color name="colorMainBlue">#4C9BFD</color>
+    <color name="date_picker_text_dark">#333333</color>
+    <color name="date_picker_divider">#11112233</color>
+    <color name="colorPagerBg">#EFEEEE</color>
+</resources>
