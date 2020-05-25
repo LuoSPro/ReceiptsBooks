@@ -21,7 +21,7 @@
 
     </RelativeLayout>
 
-    <androidx.drawerlayout.widget.DrawerLayout
+    <com.example.receiptsbooks.ui.custom.MyDrawerLayout
         android:id="@+id/list_drawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -37,7 +37,7 @@
             android:layout_gravity="end"
             android:layout_marginStart="50dp" />
 
-    </androidx.drawerlayout.widget.DrawerLayout>
+    </com.example.receiptsbooks.ui.custom.MyDrawerLayout>
 
 
 

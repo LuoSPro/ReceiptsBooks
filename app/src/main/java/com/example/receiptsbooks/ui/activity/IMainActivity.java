@@ -10,4 +10,8 @@ public interface IMainActivity {
 
     void switch2Home();
 
+    void switch2BudgetCenter();
+
+    void switch2Setting();
+
 }

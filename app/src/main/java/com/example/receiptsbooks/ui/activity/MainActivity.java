@@ -3,7 +3,6 @@ package com.example.receiptsbooks.ui.activity;
 import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -14,15 +13,15 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.receiptsbooks.R;
 import com.example.receiptsbooks.base.BaseActivity;
 import com.example.receiptsbooks.base.BaseFragment;
+import com.example.receiptsbooks.ui.fragment.BudgetCenterFragment;
 import com.example.receiptsbooks.ui.fragment.HistoriesFragment;
 import com.example.receiptsbooks.ui.fragment.HomeFragment;
 import com.example.receiptsbooks.ui.fragment.ListFragment;
-import com.example.receiptsbooks.ui.fragment.SettingFragment;
 import com.example.receiptsbooks.ui.fragment.SearchFragment;
+import com.example.receiptsbooks.ui.fragment.SettingFragment;
 import com.example.receiptsbooks.ui.fragment.StoreFragment;
 import com.example.receiptsbooks.utils.Exit;
 import com.example.receiptsbooks.utils.LogUtils;
-import com.example.receiptsbooks.utils.SizeUtils;
 import com.example.receiptsbooks.utils.ToastUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -46,6 +45,7 @@ public class MainActivity extends BaseActivity implements IMainActivity{
     private SearchFragment mSearchFragment;
     private HistoriesFragment mHistoriesFragment;
     private Exit mExit;
+    private BudgetCenterFragment mBudgetCenterFragment;
 
 
     @Override
@@ -110,6 +110,7 @@ public class MainActivity extends BaseActivity implements IMainActivity{
         mListFragment = new ListFragment();
         mSearchFragment = new SearchFragment();
         mHistoriesFragment = new HistoriesFragment();
+        mBudgetCenterFragment = new BudgetCenterFragment();
         mFm = getSupportFragmentManager();
         //默认首页为起始页面
         switchFragment(mHomeFragment);
@@ -150,7 +151,9 @@ public class MainActivity extends BaseActivity implements IMainActivity{
             switch2Home();
         } else if(lastOneFragment == mSearchFragment) {
             switch2Store();
-        }else{
+        }else if (lastOneFragment == mBudgetCenterFragment){
+            switch2Setting();
+        }else {
             // handle by activity
             pressAgainExit();
         }
@@ -170,6 +173,7 @@ public class MainActivity extends BaseActivity implements IMainActivity{
      */
     @Override
     public void switch2Search() {
+        mNavigationView.setVisibility(View.GONE);
         switchFragment(mSearchFragment);
     }
 
@@ -180,17 +184,6 @@ public class MainActivity extends BaseActivity implements IMainActivity{
     public void switch2Store() {
         //切换导航栏的选中项
         switchFragment(mStoreFragment);
-    }
-
-    private void hideBottomNavigation() {
-        ViewGroup.LayoutParams layoutParams = mPageContainer.getLayoutParams();
-        layoutParams.height -= SizeUtils.dip2px(this, 50);
-        mNavigationView.setVisibility(View.GONE);
-    }
-
-    private void restoreBottomNavigation() {
-        ViewGroup.LayoutParams layoutParams = mPageContainer.getLayoutParams();
-        layoutParams.height += SizeUtils.dip2px(this, 50);
         mNavigationView.setVisibility(View.VISIBLE);
     }
 
@@ -205,13 +198,33 @@ public class MainActivity extends BaseActivity implements IMainActivity{
         switchFragment(mHistoriesFragment);
     }
 
+    /**
+     * 切换到首页
+     */
     @Override
     public void switch2Home() {
         //切换导航栏的选中项
         //restoreBottomNavigation();
         mNavigationView.setVisibility(View.VISIBLE);
-
         switchFragment(mHomeFragment);
+    }
+
+    /**
+     * 切换到预算中心
+     */
+    @Override
+    public void switch2BudgetCenter() {
+        mNavigationView.setVisibility(View.GONE);
+        switchFragment(mBudgetCenterFragment);
+    }
+
+    /**
+     * 切换到设置界面
+     */
+    @Override
+    public void switch2Setting() {
+        mNavigationView.setVisibility(View.VISIBLE);
+        switchFragment(mSettingFragment);
     }
 
     /**
