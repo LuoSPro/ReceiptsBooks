@@ -25,7 +25,7 @@ import com.example.receiptsbooks.room.bean.IBaseProduct;
 import com.example.receiptsbooks.ui.adapter.ReceiptInfoListAdapter;
 import com.example.receiptsbooks.ui.custom.TextFlowLayout;
 import com.example.receiptsbooks.utils.Constants;
-import com.example.receiptsbooks.utils.DateConverterUtil;
+import com.example.receiptsbooks.utils.DateUtils;
 import com.example.receiptsbooks.utils.PresenterManager;
 import com.example.receiptsbooks.utils.SizeUtils;
 import com.example.receiptsbooks.view.IReceiptInfoCallback;
@@ -246,7 +246,7 @@ public class ReceiptInfoActivity extends BaseActivity implements IReceiptInfoCal
     @Override
     public void onResultLoaded(ReceiptInfo receiptInfo) {
         setUpStatus(State.SUCCESS);
-        setDataToView(mReceiptInfo,mReceiptInfo.getTotalProduct());
+        setDataToView(receiptInfo,receiptInfo.getTotalProduct());
     }
 
     private void setDataToView(ReceiptInfo receiptInfo,List<? extends IBaseProduct> products) {
@@ -263,7 +263,7 @@ public class ReceiptInfoActivity extends BaseActivity implements IReceiptInfoCal
         }
         mTypeView.setTextList(list,false);
         mTotalPriceTv.setText("总价: " + receiptInfo.getTotalPrice());
-        mDateTv.setText("时间: " + DateConverterUtil.dateToString(DateConverterUtil.stringToData(receiptInfo.getDate()),false));
+        mDateTv.setText("时间: " + DateUtils.dateToString(DateUtils.stringToData(receiptInfo.getDate()),false));
         mCountTv.setText("商品数量: " + products.size());
         //使用Glide框架加载图片
         if (!mIsPreviewStatus){

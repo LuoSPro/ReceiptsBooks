@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="30dp"
+    android:paddingStart="30dp"
+    android:paddingTop="30dp"
+    android:paddingBottom="20dp"
+    android:paddingEnd="20dp">
+
+    <TextView
+        android:id="@+id/budget_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="服饰-预算"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/budget_dialog_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/budget_dialog_title"
+        android:textColor="@color/colorPrimaryDark"
+        android:inputType="number"
+        android:digits="0123456789."
+        android:hint="@string/text_dialog_budget_setting_hint"/>
+
+    <TextView
+        android:id="@+id/budget_dialog_tv_word_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/budget_dialog_et"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="0/6" />
+
+    <TextView
+        android:id="@+id/budget_dialog_button_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/budget_dialog_tv_word_count"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:textColor="@color/colorGray"
+        android:enabled="false"
+        android:text="@string/text_dialog_budget_setting_confirm"/>
+
+</RelativeLayout>

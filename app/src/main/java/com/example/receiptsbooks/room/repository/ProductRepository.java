@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 import com.example.receiptsbooks.room.bean.ProductBean;
 import com.example.receiptsbooks.room.bean.ReceiptAndProduct;
 import com.example.receiptsbooks.room.dao.ProductDao;
-import com.example.receiptsbooks.room.database.ReceiptInfoDatabase;
+import com.example.receiptsbooks.room.database.ReceiptDatabase;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class ProductRepository {
     private ProductDao mProductDao;
 
     public ProductRepository(Context context) {
-        ReceiptInfoDatabase productDatabase = ReceiptInfoDatabase.getDatabase(context.getApplicationContext());
+        ReceiptDatabase productDatabase = ReceiptDatabase.getDatabase(context.getApplicationContext());
         mProductDao = productDatabase.getProductDao();
         allProductLive = mProductDao.getAllProduct();
     }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 设置背景色（黑色） -->
+    <item android:id="@android:id/background">
+        <shape>
+            <padding
+                android:bottom="2dp"
+                android:left="2dp"
+                android:right="2dp"
+                android:top="2dp" />
+            <gradient
+                android:angle="45"
+                android:endColor="#FBFBFB"
+                android:startColor="#FAFAFA" />
+            <corners android:radius="12dp" />
+            <stroke
+                android:width="1dp"
+                android:color="#F7ECB7" />
+        </shape>
+    </item>
+
+    <!-- 设置进度条颜色（白色） -->
+    <item android:id="@android:id/progress">
+        <!-- scale 左右都是圆角 clip 的话  左侧圆角，右侧是直角，clip gravity可以设置显示进度的位置，从左至右，从右至左或者从中间到两边-->
+        <scale android:scaleWidth="100%">
+            <shape >
+                <gradient
+                    android:angle="45"
+                    android:endColor="#B4352F"
+                    android:startColor="#E07A63" />
+                <corners android:radius="12dp" />
+            </shape>
+        </scale>
+    </item>
+
+</layer-list>

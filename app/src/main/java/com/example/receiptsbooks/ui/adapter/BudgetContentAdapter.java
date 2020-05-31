@@ -1,5 +1,7 @@
 package com.example.receiptsbooks.ui.adapter;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.receiptsbooks.R;
-import com.example.receiptsbooks.model.domain.BudgetItem;
+import com.example.receiptsbooks.model.domain.BudgetInfo;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +24,10 @@ import butterknife.ButterKnife;
 
 public class BudgetContentAdapter extends RecyclerView.Adapter<BudgetContentAdapter.InnerHolder> {
 
-    private List<BudgetItem> mBudgetItems = new ArrayList<>();
+    private List<BudgetInfo> mBudgetItems = new ArrayList<>();
+    private OnBudgetItemClickListener mBudgetListener;
+    private Context mContext;
+
     @NonNull
     @Override
     public InnerHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -31,13 +37,14 @@ public class BudgetContentAdapter extends RecyclerView.Adapter<BudgetContentAdap
 
     @Override
     public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
-        BudgetItem budgetItem = mBudgetItems.get(position);
-        holder.mBudgetTitleTv.setText(budgetItem.getBudgetTitle());
-        holder.mBudgetBalanceTv.setText(""+budgetItem.getBudgetBalance());
-        holder.mBudgetStatusTv.setText(budgetItem.getBudgetStatus());
-        holder.mBudgetMoneyTv.setText(""+budgetItem.getBudgetMoney());
-        holder.mBudgetIconIv.setImageResource(budgetItem.getBudgetIcon());
-        holder.mBudgetProgressPb.setProgress(budgetItem.getBudgetProgress());
+        BudgetInfo budgetItem = mBudgetItems.get(position);
+        holder.setData(budgetItem);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBudgetListener.onBudgetClick(budgetItem.getBudgetTitle()+"-预算",position,budgetItem.getBudgetMoney()+"");
+            }
+        });
     }
 
     @Override
@@ -45,10 +52,44 @@ public class BudgetContentAdapter extends RecyclerView.Adapter<BudgetContentAdap
         return mBudgetItems.size();
     }
 
-    public void setData(List<BudgetItem> budgetItems){
+    public void setData(List<BudgetInfo> budgetItems,Context context){
+        this.mContext = context;
         this.mBudgetItems.clear();
         this.mBudgetItems.addAll(budgetItems);
         notifyDataSetChanged();
+    }
+
+    public List<BudgetInfo> getData(){
+        return mBudgetItems;
+    }
+
+    public double getAllBudgetMoney(){
+        double totalBudget = 0;
+        for (int i = 0; i < mBudgetItems.size(); i++) {
+            totalBudget += mBudgetItems.get(i).getBudgetMoney();
+        }
+        return totalBudget;
+    }
+
+    public double getAllBudgetBalance(){
+        double totalBalance = 0;
+        for (int i = 0; i < mBudgetItems.size(); i++) {
+            totalBalance += mBudgetItems.get(i).getBudgetBalance();
+        }
+        return totalBalance;
+    }
+
+    public void updateBudgetItem(double budgetPrice, int position) {
+        BudgetInfo budgetInfo = mBudgetItems.get(position);
+        budgetInfo.setBudgetMoney(budgetPrice);
+        if (budgetInfo.getBudgetProgress()<0){
+            //说明预算不够
+            budgetInfo.setBudgetStatus(BudgetInfo.BudgetStatus.OVERSPEND);
+        }else{
+            budgetInfo.setBudgetStatus(BudgetInfo.BudgetStatus.BALANCE);
+        }
+        budgetInfo.setSetting(true);
+        notifyItemChanged(mBudgetItems.indexOf(budgetInfo));
     }
 
     public class InnerHolder extends RecyclerView.ViewHolder {
@@ -75,5 +116,36 @@ public class BudgetContentAdapter extends RecyclerView.Adapter<BudgetContentAdap
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
+
+        @SuppressLint("SetTextI18n")
+        public void setData(BudgetInfo budgetItem) {
+            mBudgetTitleTv.setText(budgetItem.getBudgetTitle());
+            if (budgetItem.isSetting()){
+                mBudgetMoneyTv.setText(new DecimalFormat("0.00").format(budgetItem.getBudgetMoney()));
+            }else{
+                //如果不在这里加这个，如果滑动到未设置到的item，那么他会去复用之前的item的信息，造成重复
+                mBudgetMoneyTv.setText("未设置");
+            }
+            mBudgetIconIv.setImageResource(budgetItem.getBudgetIcon());
+            if (budgetItem.getBudgetProgress()<0){
+                mBudgetProgressPb.setProgress(5);
+                budgetItem.setBudgetStatus(BudgetInfo.BudgetStatus.OVERSPEND);
+                mBudgetProgressPb.setProgressDrawable(mContext.getDrawable(R.drawable.custom_progress_bg_excess));
+                mBudgetBalanceTv.setText(new DecimalFormat("0.00").format(budgetItem.getBudgetBalance()-budgetItem.getBudgetMoney()));
+            }else{
+                mBudgetProgressPb.setProgress(budgetItem.getBudgetProgress());
+                mBudgetBalanceTv.setText(new DecimalFormat("0.00").format(budgetItem.getBudgetBalance()));
+            }
+            //前面先设置，后面再展示
+            mBudgetStatusTv.setText(budgetItem.getBudgetStatus());
+        }
+    }
+
+    public void setOnBudgetItemClickListener(OnBudgetItemClickListener listener){
+        this.mBudgetListener = listener;
+    }
+
+    public interface OnBudgetItemClickListener{
+        void onBudgetClick(String title, int position, String s);
     }
 }

@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.example.receiptsbooks.R;
 import com.example.receiptsbooks.room.bean.ProductBean;
 import com.example.receiptsbooks.room.bean.ReceiptAndProduct;
-import com.example.receiptsbooks.utils.DateConverterUtil;
+import com.example.receiptsbooks.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -88,7 +88,7 @@ public class ListPagerContentAdapter extends BaseExpandableListAdapter {
                 iterator.remove();
             }
         }
-        groupViewHolder.mReceiptDate.setText(DateConverterUtil.dateToString(receiptAndProduct.getReceiptInfoBean().getReceiptDate(),false));
+        groupViewHolder.mReceiptDate.setText(DateUtils.dateToString(receiptAndProduct.getReceiptInfoBean().getReceiptDate(),false));
         groupViewHolder.mProductType1.setText(mCategory);
         groupViewHolder.mProductType2.setText(mCategory);
         groupViewHolder.mProductCount.setText(String.format(parent.getContext().getString(R.string.text_history_item_product_count),productBeans.size()));

@@ -15,7 +15,7 @@ import com.example.receiptsbooks.room.bean.ProductBean;
 import com.example.receiptsbooks.room.bean.ReceiptAndProduct;
 import com.example.receiptsbooks.room.bean.ReceiptInfoBean;
 import com.example.receiptsbooks.ui.custom.TextFlowLayout;
-import com.example.receiptsbooks.utils.DateConverterUtil;
+import com.example.receiptsbooks.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,10 +90,10 @@ public class HistoryContentAdapter extends RecyclerView.Adapter<HistoryContentAd
             Context context = itemView.getContext();
             ReceiptInfoBean receiptInfoBean = receiptAndProduct.getReceiptInfoBean();
             List<ProductBean> productBean = receiptAndProduct.getProductBean();
-            mReceiptDate.setText(DateConverterUtil.dateToString(receiptInfoBean.getReceiptDate(),false));
+            mReceiptDate.setText(DateUtils.dateToString(receiptInfoBean.getReceiptDate(),false));
             mTotalPrice.setText(String.format(context.getString(R.string.text_history_item_total_price),receiptInfoBean.getTotalPrice()));
             mProductCount.setText(String.format(context.getString(R.string.text_history_item_product_count),productBean.size()));
-            mLastModifyDate.setText("上次修改: "+ DateConverterUtil.dateFormat(receiptInfoBean.getSaveData()));
+            mLastModifyDate.setText("上次修改: "+ DateUtils.dateFormat(receiptInfoBean.getSaveData()));
             //获取所有商品的类型
             List<String> productType = new ArrayList<>();
             for (ProductBean bean : productBean) {

@@ -21,7 +21,7 @@ import com.example.receiptsbooks.ui.adapter.ListPagerAdapter;
 import com.example.receiptsbooks.ui.custom.TextFlowLayout;
 import com.example.receiptsbooks.ui.custom.datepicker.CustomDatePicker;
 import com.example.receiptsbooks.ui.custom.datepicker.DateFormatUtils;
-import com.example.receiptsbooks.utils.DateConverterUtil;
+import com.example.receiptsbooks.utils.DateUtils;
 import com.example.receiptsbooks.utils.PresenterManager;
 import com.example.receiptsbooks.utils.ToastUtil;
 import com.example.receiptsbooks.view.IListCallback;
@@ -194,8 +194,8 @@ public class ListFragment extends BaseFragment implements IListCallback, IListCa
         mConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Date beginDate = DateConverterUtil.stringToData(mBeginTimeTv.getText().toString().trim());
-                Date endDate = DateConverterUtil.stringToData(mEndTimeTv.getText().toString().trim());
+                Date beginDate = DateUtils.stringToData(mBeginTimeTv.getText().toString().trim());
+                Date endDate = DateUtils.stringToData(mEndTimeTv.getText().toString().trim());
                 if (beginDate == null){
                     ToastUtil.showToast("起始时间不能为空");
                     return;

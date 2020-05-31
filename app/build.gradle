@@ -72,6 +72,8 @@ dependencies {
     //图片预览框架
     implementation 'com.ycjiang:ImagePreview:2.3.5'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    //图标框架
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
 repositories {
     mavenCentral()

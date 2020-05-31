@@ -18,7 +18,7 @@ import com.example.receiptsbooks.room.bean.ReceiptInfoBean;
 import com.example.receiptsbooks.room.repository.ReceiptInfoRepository;
 import com.example.receiptsbooks.room.viewmodel.ProductViewModel;
 import com.example.receiptsbooks.room.viewmodel.ReceiptInfoViewModel;
-import com.example.receiptsbooks.utils.DateConverterUtil;
+import com.example.receiptsbooks.utils.DateUtils;
 import com.example.receiptsbooks.utils.LogUtils;
 import com.example.receiptsbooks.utils.NetworkUtils;
 import com.example.receiptsbooks.utils.RetrofitManager;
@@ -119,7 +119,7 @@ public class ReceiptInfoPresenterImpl implements IReceiptInfoPresenter {
                     mMainThread.post(new Runnable() {
                         @Override
                         public void run() {
-                            ToastUtil.showToast("保存失败, 这张小票在"+ DateConverterUtil.dateToString(receiptInfoBeans.get(0).getSaveData(),false)+"已保存");
+                            //ToastUtil.showToast("保存失败, 这张小票在"+ DateUtils.dateToString(receiptInfoBeans.get(0).getSaveData(),false)+"已保存");
                         }
                     });
                 }else{
@@ -142,8 +142,8 @@ public class ReceiptInfoPresenterImpl implements IReceiptInfoPresenter {
 
     private void insertReceiptToDatabase(ReceiptInfoRepository.ResponseCallback responseCallback, ReceiptInfo receiptInfo, String receiptPhotoPath) {
         ReceiptInfoBean receiptInfoBean = new ReceiptInfoBean();
-        receiptInfoBean.setSaveData(DateConverterUtil.revertDate(System.currentTimeMillis()));
-        receiptInfoBean.setReceiptDate(DateConverterUtil.stringToData(receiptInfo.getReceiptDate()));
+        receiptInfoBean.setSaveData(DateUtils.revertDate(System.currentTimeMillis()));
+        receiptInfoBean.setReceiptDate(DateUtils.stringToData(receiptInfo.getReceiptDate()));
         receiptInfoBean.setTotalPrice(receiptInfo.getTotalPrice());
         receiptInfoBean.setReceiptPhotoPath(receiptPhotoPath);
         mReceiptInfoViewModel.insertReceiptInfo(responseCallback,receiptInfoBean);

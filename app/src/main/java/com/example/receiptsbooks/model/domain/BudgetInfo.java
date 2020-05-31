@@ -1,12 +1,39 @@
 package com.example.receiptsbooks.model.domain;
 
-public class BudgetItem {
+public class BudgetInfo {
+    private int id;
+    private int dateId;
     private String mBudgetTitle;
-    private Double mBudgetMoney;
+    private double mBudgetMoney;
     private BudgetStatus mBudgetStatus;
     private int mBudgetProgress;
     private int mBudgetIcon;
     private double mBudgetBalance;
+    private boolean mIsSetting;
+
+    public int getDateId() {
+        return dateId;
+    }
+
+    public void setDateId(int dateId) {
+        this.dateId = dateId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean isSetting() {
+        return mIsSetting;
+    }
+
+    public void setSetting(boolean setting) {
+        mIsSetting = setting;
+    }
 
     public String getBudgetTitle() {
         return mBudgetTitle;
@@ -16,11 +43,11 @@ public class BudgetItem {
         mBudgetTitle = budgetTitle;
     }
 
-    public Double getBudgetMoney() {
+    public double getBudgetMoney() {
         return mBudgetMoney;
     }
 
-    public void setBudgetMoney(Double budgetMoney) {
+    public void setBudgetMoney(double budgetMoney) {
         mBudgetMoney = budgetMoney;
     }
 
@@ -32,7 +59,7 @@ public class BudgetItem {
         }else if (mBudgetStatus == BudgetStatus.OVERSPEND){
             return "超支";
         }
-        return "";
+        return "支出";
     }
 
     public void setBudgetStatus(BudgetStatus budgetStatus) {
@@ -40,11 +67,10 @@ public class BudgetItem {
     }
 
     public int getBudgetProgress() {
+        if (mBudgetMoney == 0.0){//分母不能为0
+            return 0;
+        }
         return (int) ((mBudgetMoney-mBudgetBalance)/mBudgetMoney*100);
-    }
-
-    public void setBudgetProgress(int budgetProgress) {
-        mBudgetProgress = budgetProgress;
     }
 
     public int getBudgetIcon() {

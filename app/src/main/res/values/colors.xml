@@ -17,6 +17,7 @@
     <color name="colorTabNormal">#aaffffff</color>
     <color name="colorTabSelected">#ffffff</color>
     <color name="colorTmall">#D0021B</color>
+    <color name="budget_progress_bar_exc">#7E0067</color>
     <color name="colorPageBg">#EEEEEE</color>
 
 <!--    <color name="colorMainBlue">#39C2D0</color>-->
@@ -24,4 +25,32 @@
     <color name="date_picker_text_dark">#333333</color>
     <color name="date_picker_divider">#11112233</color>
     <color name="colorPagerBg">#EFEEEE</color>
+
+
+
+
+
+    <color name="color10">#DFAF07</color>
+    <color name="color19">#9DDC0A</color>
+    <color name="color7">#3DD77C</color>
+    <color name="color22">#5E5E5E</color>
+    <color name="color11">#914646</color>
+    <color name="color17">#9A582A</color>
+    <color name="color3">#913000</color>
+    <color name="color8">#B16B02</color>
+    <color name="color9">#F8CA00</color>
+    <color name="color1">#8AA300</color>
+    <color name="color5">#92CDF0</color>
+    <color name="color23">#B1BABA</color>
+    <color name="color13">#00B86E</color>
+    <color name="color14">#A9DBD9</color>
+    <color name="color15">#001CD1</color>
+    <color name="color16">#26A599</color>
+    <color name="color6">#5C00C6</color>
+    <color name="color18">#BB00EA</color>
+    <color name="color2">#49123F</color>
+    <color name="color20">#B379E6</color>
+    <color name="color21">#566E75</color>
+    <color name="color4">#62784B</color>
+    <color name="color12">#C6C5FF</color>
 </resources>

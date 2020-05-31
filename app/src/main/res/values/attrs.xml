@@ -39,11 +39,4 @@
         <attr name="wheel_curved" format="boolean" />
     </declare-styleable>
 
-
-    <declare-styleable name="PieChartView">
-        <attr name="circleRadius" format="dimension" />
-        <attr name="textSize" format="dimension" />
-        <attr name="exampleDrawable" format="color|reference" />
-    </declare-styleable>
-
 </resources>

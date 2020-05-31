@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -16,7 +15,6 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.receiptsbooks.R;
-import com.example.receiptsbooks.ui.custom.PieChartView;
 import com.example.receiptsbooks.utils.CameraFilePathUtil;
 import com.example.receiptsbooks.utils.LogUtils;
 import com.example.receiptsbooks.utils.permission.PermissionHelper;
@@ -27,7 +25,6 @@ import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zhihu.matisse.internal.utils.MediaStoreCompat;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -53,20 +50,6 @@ public class TestActivity extends AppCompatActivity implements PermissionInterfa
         initListener();
 
         DisplayMetrics systemDM = Resources.getSystem().getDisplayMetrics();
-
-        PieChartView pieChartView = (PieChartView) findViewById(R.id.pie_chart);
-
-        List<PieChartView.PieceDataHolder> pieceDataHolders = new ArrayList<>();
-
-        pieceDataHolders.add(new PieChartView.PieceDataHolder(100,0xFF77CCAA, "今天，１"));
-        pieceDataHolders.add(new PieChartView.PieceDataHolder(1000, 0xFF11AA33, "明天，２"));
-        pieceDataHolders.add(new PieChartView.PieceDataHolder(1200, Color.GRAY, "就是风，３"));
-        pieceDataHolders.add(new PieChartView.PieceDataHolder(5000, Color.YELLOW, "呵呵，４"));
-        pieceDataHolders.add(new PieChartView.PieceDataHolder(10000, Color.RED, "小京，５"));
-        pieceDataHolders.add(new PieChartView.PieceDataHolder(13000, Color.BLUE, "花花，６"));
-        pieceDataHolders.add(new PieChartView.PieceDataHolder(1000, Color.BLACK, "我的，7"));
-
-        pieChartView.setData(pieceDataHolders);
 
     }
 

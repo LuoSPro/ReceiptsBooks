@@ -9,7 +9,9 @@ import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "product_table" ,foreignKeys = @ForeignKey(entity = ReceiptInfoBean.class,parentColumns = "id",childColumns = "receipt_id",onDelete = CASCADE),indices = {@Index(value = "receipt_id",unique = false)})
+@Entity(tableName = "product_table" ,
+        foreignKeys = @ForeignKey(entity = ReceiptInfoBean.class,parentColumns = "id",childColumns = "receipt_id",onDelete = CASCADE),
+        indices = {@Index(value = "receipt_id",unique = false)})
 public class ProductBean implements IBaseProduct {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "product_id")

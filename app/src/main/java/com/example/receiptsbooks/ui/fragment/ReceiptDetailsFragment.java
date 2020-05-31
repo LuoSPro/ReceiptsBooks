@@ -45,7 +45,7 @@ import com.example.receiptsbooks.ui.adapter.ReceiptInfoListAdapter;
 import com.example.receiptsbooks.ui.custom.ImageLoader;
 import com.example.receiptsbooks.utils.AppBarStateChangeListener;
 import com.example.receiptsbooks.utils.Constants;
-import com.example.receiptsbooks.utils.DateConverterUtil;
+import com.example.receiptsbooks.utils.DateUtils;
 import com.example.receiptsbooks.utils.LogUtils;
 import com.example.receiptsbooks.utils.OnClickUtils;
 import com.example.receiptsbooks.utils.PresenterManager;
@@ -129,7 +129,7 @@ public class ReceiptDetailsFragment extends BaseFragment implements IReceiptDeta
             return null;
         }
         mReceiptInfo.setTotalPrice(mReceiptTotalPrice);
-        mReceiptInfo.setReceiptDate(DateConverterUtil.dateToString(mReceiptDate,false));
+        mReceiptInfo.setReceiptDate(DateUtils.dateToString(mReceiptDate,false));
         return mReceiptInfo;
     }
 
@@ -391,14 +391,14 @@ public class ReceiptDetailsFragment extends BaseFragment implements IReceiptDeta
 
     //提取数据
     private void extractDataFromView(){
-        mReceiptDate = DateConverterUtil.stringToData(mReceiptDateTv.getText().toString().trim());
+        mReceiptDate = DateUtils.stringToData(mReceiptDateTv.getText().toString().trim());
         if (mReceiptDate == null){
-            mReceiptDateTv.setText(DateConverterUtil.dateToString(DateConverterUtil.revertDate(System.currentTimeMillis()),false));
+            mReceiptDateTv.setText(DateUtils.dateToString(DateUtils.revertDate(System.currentTimeMillis()),false));
             ToastUtil.showToast("提取数据失败，时间格式不正确");
             mDataIsLegal = false;
             return;
         }
-        LogUtils.d(this,"mReceiptDate ==> " + DateConverterUtil.dateToString(mReceiptDate,false));
+        LogUtils.d(this,"mReceiptDate ==> " + DateUtils.dateToString(mReceiptDate,false));
         mReceiptTotalPrice = -1;
         try {
             mReceiptTotalPrice = Double.parseDouble(mReceiptTotalPriceTv.getText().toString().trim());
@@ -511,7 +511,7 @@ public class ReceiptDetailsFragment extends BaseFragment implements IReceiptDeta
             mReceiptTotalPriceTv.setText(totalPrice+"");
             //LogUtils.d(this,"TotalPrice"+totalPrice);
             //小票时间
-            String receiptDate = DateConverterUtil.dateToString(mReceiptInfoBean.getReceiptDate(), false);
+            String receiptDate = DateUtils.dateToString(mReceiptInfoBean.getReceiptDate(), false);
             //LogUtils.d(this,"ReceiptDate"+ receiptDate);
             mReceiptDateTv.setText(receiptDate);
         }else{

@@ -11,7 +11,7 @@ import com.example.receiptsbooks.room.bean.ReceiptAndProduct;
 import com.example.receiptsbooks.room.bean.ReceiptInfoBean;
 import com.example.receiptsbooks.room.viewmodel.ProductViewModel;
 import com.example.receiptsbooks.room.viewmodel.ReceiptInfoViewModel;
-import com.example.receiptsbooks.utils.DateConverterUtil;
+import com.example.receiptsbooks.utils.DateUtils;
 import com.example.receiptsbooks.view.IReceiptDetailsCallback;
 
 public class ReceiptDetailsPresenterImpl implements IReceiptDetailsPresenter {
@@ -40,7 +40,7 @@ public class ReceiptDetailsPresenterImpl implements IReceiptDetailsPresenter {
         if (mReceiptInfoViewModel == null){
             createReceiptInfoViewModel(fragment);
         }
-        receiptInfoBean.setSaveData(DateConverterUtil.revertDate(System.currentTimeMillis()));
+        receiptInfoBean.setSaveData(DateUtils.revertDate(System.currentTimeMillis()));
         mReceiptInfoViewModel.updateReceiptInfo(receiptInfoBean);
     }
 

@@ -21,7 +21,6 @@ import com.example.receiptsbooks.base.State;
 import com.example.receiptsbooks.model.domain.ReceiptInfo;
 import com.example.receiptsbooks.presenter.IHomePresenter;
 import com.example.receiptsbooks.presenter.IReceiptInfoPresenter;
-import com.example.receiptsbooks.presenter.impl.HistoriesPresenterImpl;
 import com.example.receiptsbooks.room.bean.ReceiptAndProduct;
 import com.example.receiptsbooks.ui.activity.IMainActivity;
 import com.example.receiptsbooks.ui.activity.MainActivity;
@@ -69,7 +68,6 @@ public class HomeFragment extends BaseFragment implements PermissionInterface, I
     private IHomePresenter mHomePresenter = null;
     private MediaStoreCompat mMediaStoreCompat;
     private IReceiptInfoPresenter mReceiptInfoPresenter = null;
-    private HistoriesPresenterImpl mHistoriesPresenter = null;
     private HomeLooperPagerAdapter mHomeLooperPagerAdapter;
 
     @Override
@@ -128,8 +126,6 @@ public class HomeFragment extends BaseFragment implements PermissionInterface, I
         mHomePresenter.registerViewCallback(this);
         mReceiptInfoPresenter = PresenterManager.getInstance().getReceiptInfoPresenter();
         mReceiptInfoPresenter.registerViewCallback(this);
-        mHistoriesPresenter = PresenterManager.getInstance().getHistoriesPresenter();
-        mHistoriesPresenter.registerViewCallback(this);
     }
 
     @Override
@@ -140,9 +136,6 @@ public class HomeFragment extends BaseFragment implements PermissionInterface, I
         }
         if (mReceiptInfoPresenter != null) {
             mReceiptInfoPresenter.unregisterViewCallback(this);
-        }
-        if (mHistoriesPresenter != null) {
-            mHistoriesPresenter.unregisterViewCallback(this);
         }
     }
 
@@ -178,7 +171,6 @@ public class HomeFragment extends BaseFragment implements PermissionInterface, I
 
             }
         });
-
         mHomeLooperPagerAdapter.setOnHomeLooperClickListener(this);
     }
 
@@ -195,8 +187,6 @@ public class HomeFragment extends BaseFragment implements PermissionInterface, I
 
     @OnClick(R.id.home_tv_histories)
     public void viewHistories(){
-        //预加载数据
-        mHistoriesPresenter.getAllReceiptHistories(this,this);
         //跳转到搜索界面
         FragmentActivity activity = getActivity();
         if (activity instanceof IMainActivity) {

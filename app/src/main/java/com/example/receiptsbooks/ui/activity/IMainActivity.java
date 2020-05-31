@@ -14,4 +14,6 @@ public interface IMainActivity {
 
     void switch2Setting();
 
+    void switch2ChartAnalysis();
+
 }

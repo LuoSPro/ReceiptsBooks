@@ -37,7 +37,7 @@ public class SettingFragment extends BaseFragment implements SettingContentAdapt
         mDataIcon.add(R.mipmap.budget_icon);
         mDataIcon.add(R.mipmap.chart_icon);
         mDataContent.add("预算中心");
-        mDataContent.add("图标分析");
+        mDataContent.add("图表分析");
         //添加
         mContentList.setAdapter(mContentAdapter);
 
@@ -57,11 +57,14 @@ public class SettingFragment extends BaseFragment implements SettingContentAdapt
 
     @Override
     public void onSettingItemClick(int position) {
-        if (position == 0){
-            FragmentActivity activity = getActivity();
-            if (activity instanceof IMainActivity){
+        FragmentActivity activity = getActivity();
+        if (activity instanceof IMainActivity) {
+            if (position == 0){
                 ((MainActivity)activity).switch2BudgetCenter();
+            }else if (position == 1){
+                ((MainActivity)activity).switch2ChartAnalysis();
             }
         }
+
     }
 }

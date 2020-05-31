@@ -23,14 +23,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <com.example.receiptsbooks.ui.custom.PieChartView
-        android:id="@+id/pie_chart"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="#ccc"
-        app:circleRadius="80dp"
-        app:textSize="13sp" />
-
-
-
 </LinearLayout>

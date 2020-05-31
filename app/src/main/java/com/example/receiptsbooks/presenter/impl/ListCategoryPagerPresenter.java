@@ -10,7 +10,7 @@ import com.example.receiptsbooks.presenter.IListCategoryPagerPresenter;
 import com.example.receiptsbooks.room.bean.ReceiptAndProduct;
 import com.example.receiptsbooks.room.viewmodel.ProductViewModel;
 import com.example.receiptsbooks.room.viewmodel.ReceiptInfoViewModel;
-import com.example.receiptsbooks.utils.DateConverterUtil;
+import com.example.receiptsbooks.utils.DateUtils;
 import com.example.receiptsbooks.view.IListCategoryPagerCallback;
 
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class ListCategoryPagerPresenter implements IListCategoryPagerPresenter {
             });
         }else{
             //根据时间筛选
-            LiveData<List<ReceiptAndProduct>> receiptAndProductFromDate = mProductViewModel.getReceiptAndProductByDate(DateConverterUtil.converterDate(beginDate),DateConverterUtil.converterDate(endDate));
+            LiveData<List<ReceiptAndProduct>> receiptAndProductFromDate = mProductViewModel.getReceiptAndProductByDate(DateUtils.converterDate(beginDate), DateUtils.converterDate(endDate));
             receiptAndProductFromDate.observe(owner, new Observer<List<ReceiptAndProduct>>() {
                 @Override
                 public void onChanged(List<ReceiptAndProduct> receiptAndProducts) {

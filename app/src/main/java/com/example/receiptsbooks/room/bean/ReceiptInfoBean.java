@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import com.example.receiptsbooks.utils.DateConverterUtil;
+import com.example.receiptsbooks.utils.DateUtils;
 
 import java.util.Date;
 
@@ -29,9 +29,9 @@ public class ReceiptInfoBean implements IBaseReceipt {
     public String toString() {
         return "ReceiptInfoBean{" +
                 "id=" + id +
-                ", receiptDate=" + DateConverterUtil.dateToString(receiptDate,false) +
+                ", receiptDate=" + DateUtils.dateToString(receiptDate,false) +
                 ", totalPrice='" + totalPrice + '\'' +
-                ", saveData=" + DateConverterUtil.dateToString(saveData,true) +
+                ", saveData=" + DateUtils.dateToString(saveData,true) +
                 '}';
     }
 

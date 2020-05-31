@@ -14,6 +14,7 @@ import com.example.receiptsbooks.R;
 import com.example.receiptsbooks.base.BaseActivity;
 import com.example.receiptsbooks.base.BaseFragment;
 import com.example.receiptsbooks.ui.fragment.BudgetCenterFragment;
+import com.example.receiptsbooks.ui.fragment.ChartAnalysisFragment;
 import com.example.receiptsbooks.ui.fragment.HistoriesFragment;
 import com.example.receiptsbooks.ui.fragment.HomeFragment;
 import com.example.receiptsbooks.ui.fragment.ListFragment;
@@ -46,6 +47,7 @@ public class MainActivity extends BaseActivity implements IMainActivity{
     private HistoriesFragment mHistoriesFragment;
     private Exit mExit;
     private BudgetCenterFragment mBudgetCenterFragment;
+    private ChartAnalysisFragment mChartAnalysisFragment;
 
 
     @Override
@@ -111,6 +113,7 @@ public class MainActivity extends BaseActivity implements IMainActivity{
         mSearchFragment = new SearchFragment();
         mHistoriesFragment = new HistoriesFragment();
         mBudgetCenterFragment = new BudgetCenterFragment();
+        mChartAnalysisFragment = new ChartAnalysisFragment();
         mFm = getSupportFragmentManager();
         //默认首页为起始页面
         switchFragment(mHomeFragment);
@@ -152,6 +155,8 @@ public class MainActivity extends BaseActivity implements IMainActivity{
         } else if(lastOneFragment == mSearchFragment) {
             switch2Store();
         }else if (lastOneFragment == mBudgetCenterFragment){
+            switch2Setting();
+        }else if (lastOneFragment == mChartAnalysisFragment){
             switch2Setting();
         }else {
             // handle by activity
@@ -216,6 +221,15 @@ public class MainActivity extends BaseActivity implements IMainActivity{
     public void switch2BudgetCenter() {
         mNavigationView.setVisibility(View.GONE);
         switchFragment(mBudgetCenterFragment);
+    }
+
+    /**
+     * 切换到图标分析
+     */
+    @Override
+    public void switch2ChartAnalysis() {
+        mNavigationView.setVisibility(View.GONE);
+        switchFragment(mChartAnalysisFragment);
     }
 
     /**

@@ -48,6 +48,6 @@ public interface ProductDao {
 
     @Transaction
     @SuppressWarnings(RoomWarnings.CURSOR_MISMATCH)
-    @Query("SELECT * FROM product_table p INNER JOIN receipt_info_table r ON p.receipt_id=r.id AND receipt_date>:beginDate AND receipt_date<:endDate GROUP BY p.receipt_id")
+    @Query("SELECT * FROM product_table p INNER JOIN receipt_info_table r ON p.receipt_id=r.id AND receipt_date>=:beginDate AND receipt_date<=:endDate GROUP BY p.receipt_id")
     LiveData<List<ReceiptAndProduct>> getReceiptAndProductByDate(long beginDate, long endDate);
 }

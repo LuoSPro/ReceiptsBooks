@@ -55,7 +55,9 @@ public class HistoriesFragment extends BaseFragment implements IHistoriesCallbac
 
     @Override
     protected void release() {
-        mHistoriesPresenter.unregisterViewCallback(this);
+        if (mHistoriesPresenter != null){
+            mHistoriesPresenter.unregisterViewCallback(this);
+        }
     }
 
     @Override
@@ -79,7 +81,7 @@ public class HistoriesFragment extends BaseFragment implements IHistoriesCallbac
         mContentList.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                outRect.top = SizeUtils.dip2px(getContext(),1.5f);
+                outRect.top = SizeUtils.dip2px(getContext(),1f);
             }
         });
         //创建适配器
@@ -89,15 +91,22 @@ public class HistoriesFragment extends BaseFragment implements IHistoriesCallbac
     }
 
     @Override
+    protected void loadData() {
+        //加载数据
+        mHistoriesPresenter.getAllReceiptHistories(this,this);
+    }
+
+    @Override
     public void onAllReceiptHistoriesLoaded(List<ReceiptAndProduct> receiptAndProducts) {
-        setUpState(State.SUCCESS);
         //这里直接使用List界面的适配器，所以分类就设置为""，这时只要去适配器里面加一个空字符判断即可
         mContentAdapter.setData(receiptAndProducts,"");
+        //把数据加载完后再设置成功，不然会出现界面卡顿的现象(因为数据还没设置完全)
+        setUpState(State.SUCCESS);
     }
 
     @Override
     public void onNetworkError() {
-
+        setUpState(State.NETWORK_ERROR);
     }
 
     @Override

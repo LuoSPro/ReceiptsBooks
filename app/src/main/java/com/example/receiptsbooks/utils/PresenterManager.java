@@ -1,5 +1,6 @@
 package com.example.receiptsbooks.utils;
 
+import com.example.receiptsbooks.presenter.IBudgetCenterPresenter;
 import com.example.receiptsbooks.presenter.IListCategoryPagerPresenter;
 import com.example.receiptsbooks.presenter.IListPresenter;
 import com.example.receiptsbooks.presenter.IReceiptDetailsPresenter;
@@ -8,6 +9,7 @@ import com.example.receiptsbooks.presenter.ISearchPresenter;
 import com.example.receiptsbooks.presenter.IStoreCategoryPagerPresenter;
 import com.example.receiptsbooks.presenter.IStorePresenter;
 import com.example.receiptsbooks.presenter.ITicketPresenter;
+import com.example.receiptsbooks.presenter.impl.BudgetCenterPresenterImpl;
 import com.example.receiptsbooks.presenter.impl.HistoriesPresenterImpl;
 import com.example.receiptsbooks.presenter.impl.HomePresenterImpl;
 import com.example.receiptsbooks.presenter.impl.ListCategoryPagerPresenter;
@@ -31,6 +33,7 @@ public class PresenterManager {
     private final HomePresenterImpl mHomePresenter;
     private final IReceiptInfoPresenter mReceiptInfoPresenter;
     private final HistoriesPresenterImpl mHistoriesPresenter;
+    private final IBudgetCenterPresenter mBudgetCenterPresenter;
 
     public static PresenterManager getInstance() {
         return ourInstance;
@@ -47,6 +50,11 @@ public class PresenterManager {
         mReceiptInfoDetailsPresenter = new ReceiptDetailsPresenterImpl();
         mReceiptInfoPresenter = new ReceiptInfoPresenterImpl();
         mHistoriesPresenter = new HistoriesPresenterImpl();
+        mBudgetCenterPresenter = new BudgetCenterPresenterImpl();
+    }
+
+    public IBudgetCenterPresenter getBudgetCenterPresenter() {
+        return mBudgetCenterPresenter;
     }
 
     public HistoriesPresenterImpl getHistoriesPresenter() {

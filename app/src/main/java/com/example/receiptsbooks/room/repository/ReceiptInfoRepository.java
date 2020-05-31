@@ -8,8 +8,8 @@ import androidx.lifecycle.LiveData;
 import com.example.receiptsbooks.model.domain.ReceiptInfo;
 import com.example.receiptsbooks.room.bean.ReceiptInfoBean;
 import com.example.receiptsbooks.room.dao.ReceiptInfoDao;
-import com.example.receiptsbooks.room.database.ReceiptInfoDatabase;
-import com.example.receiptsbooks.utils.DateConverterUtil;
+import com.example.receiptsbooks.room.database.ReceiptDatabase;
+import com.example.receiptsbooks.utils.DateUtils;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class ReceiptInfoRepository {
     private ReceiptInfoDao mInfoDao;
 
     public ReceiptInfoRepository(Context context) {
-        ReceiptInfoDatabase infoDatabase = ReceiptInfoDatabase.getDatabase(context.getApplicationContext());
+        ReceiptDatabase infoDatabase = ReceiptDatabase.getDatabase(context.getApplicationContext());
         mInfoDao = infoDatabase.getReceiptInfoDao();
         allReceiptInfoLive = mInfoDao.getAllReceiptInfo();
         allReceiptInfoByDateLive = mInfoDao.getAllReceiptInfoByDate();
@@ -47,7 +47,7 @@ public class ReceiptInfoRepository {
     }
 
     public LiveData<List<ReceiptInfoBean>> queryReceiptExists(ReceiptInfo receiptInfo) {
-        return mInfoDao.queryReceiptExists(DateConverterUtil.stringToData(receiptInfo.getDate()),receiptInfo.getTotalPrice());
+        return mInfoDao.queryReceiptExists(DateUtils.stringToData(receiptInfo.getDate()),receiptInfo.getTotalPrice());
     }
 
     //插入

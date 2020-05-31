@@ -45,4 +45,11 @@
     <string name="text_histories_record">历史记录</string>
     <string name="text_receipt_details_date_hint">年/月/日</string>
     <string name="text_setting_fragment_title">设置中心</string>
+    <string name="text_dialog_budget_setting_hint">请输入预算金额</string>
+    <string name="text_dialog_budget_setting_confirm">确定</string>
+    <string name="text_budget_center_date_select_today">今天</string>
+    <string name="text_budget_center_date_select_week">本周</string>
+    <string name="text_budget_center_date_select_month">本月</string>
+    <string name="text_budget_center_date_select_quarter">本季</string>
+    <string name="text_budget_center_date_select_year">本年</string>
 </resources>
