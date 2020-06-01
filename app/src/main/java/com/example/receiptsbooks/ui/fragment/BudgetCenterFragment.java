@@ -55,13 +55,13 @@ public class BudgetCenterFragment extends BaseFragment implements BudgetContentA
     @BindView(R.id.budget_center_tv_exceed_money)
     public TextView mExcExpend;
 
-    @BindView(R.id.budget_center_btn_refresh)
+    @BindView(R.id.setting_tool_bar_btn_refresh)
     public ImageView mRefreshBudgetBtn;
 
-    @BindView(R.id.budget_center_ll_date_select)
+    @BindView(R.id.setting_tool_bar_ll_date_select)
     public LinearLayout mDateSelectBtn;
 
-    @BindView(R.id.budget_center_tv_date)
+    @BindView(R.id.setting_tool_bar_tv_date)
     public TextView mDateTv;
 
     @BindView(R.id.budget_center_tool_bar)
@@ -70,7 +70,7 @@ public class BudgetCenterFragment extends BaseFragment implements BudgetContentA
     @BindView(R.id.budget_center_gray_layout)
     public View mGrayLayout;
 
-    @BindView(R.id.budget_center_back)
+    @BindView(R.id.setting_tool_bar_back)
     public ImageView mBackIv;
 
     private BudgetContentAdapter mBudgetAdapter;
@@ -100,7 +100,8 @@ public class BudgetCenterFragment extends BaseFragment implements BudgetContentA
 
     @Override
     protected void initView(View rootView) {
-        setUpState(State.SUCCESS);
+        //刷新按钮可见
+        mRefreshBudgetBtn.setVisibility(View.VISIBLE);
         mBudgetList.setLayoutManager(new LinearLayoutManager(getContext()));
         //创建适配器
         mBudgetAdapter = new BudgetContentAdapter();
@@ -354,6 +355,10 @@ public class BudgetCenterFragment extends BaseFragment implements BudgetContentA
                 mPopupWindow.dismiss();
             }
         }, AnimationUtil.ANIMATION_OUT_TIME);
+        //如果选择的是上次已经选择了的时间段，就没必要更新
+        if (mCurrentSelectedDate == position+1){
+            return;
+        }
         //选择了时间段，更新数据
         //ToastUtil.showToast("position" + position);
         //更新时间段

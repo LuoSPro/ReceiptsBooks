@@ -25,7 +25,13 @@ public class HistoriesPresenterImpl implements IHistoriesPresenter {
         mProductViewModel.getAllProductLive().observe(owner, new Observer<List<ReceiptAndProduct>>() {
             @Override
             public void onChanged(List<ReceiptAndProduct> receiptAndProducts) {
-                mCallback.onAllReceiptHistoriesLoaded(receiptAndProducts);
+                if (mCallback != null) {
+                    if (receiptAndProducts.size() == 0){
+                        mCallback.onEmpty();
+                    }else {
+                        mCallback.onAllReceiptHistoriesLoaded(receiptAndProducts);
+                    }
+                }
             }
         });
     }

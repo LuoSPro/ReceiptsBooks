@@ -8,14 +8,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="14dp"
         android:gravity="center_vertical"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="8dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/main_pie_chart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/main_pie_chart"
         app:layout_constraintTop_toTopOf="@+id/guideline8"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="25dp">
+        app:layout_constraintVertical_bias="0.0">
 
         <ImageView
             android:layout_width="24dp"
@@ -26,41 +27,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:textColor="@color/colorBlack"
-            android:text="支出占比"/>
+            android:text="支出占比"
+            android:textColor="@color/colorBlack" />
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/budget_center_tool_bar"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/colorPrimaryDark"
+    <include
+        layout="@layout/include_setting_tool_bar"
         app:layout_constraintBottom_toTopOf="@+id/guideline8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/chart_analysis_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:padding="4dp"
-            android:src="@mipmap/back" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/chart_analysis_back"
-            android:text="图表分析"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/main_pie_chart"
@@ -85,11 +62,12 @@
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_pie_chart"
         app:layout_constraintVertical_bias="0.0">
 

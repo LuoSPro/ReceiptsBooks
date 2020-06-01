@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">小票助手</string>
+    <string name="app_name">小票记账</string>
     <string name="permission_request_denied">Permission request denied</string>
     <string name="text_navigation_home">首页</string>
     <string name="text_navigation_store">领卷</string>
