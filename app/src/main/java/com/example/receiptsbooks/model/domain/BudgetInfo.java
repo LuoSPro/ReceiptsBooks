@@ -1,6 +1,6 @@
 package com.example.receiptsbooks.model.domain;
 
-public class BudgetInfo {
+public class BudgetInfo implements Comparable<BudgetInfo>{
     private int id;
     private int dateId;
     private String mBudgetTitle;
@@ -87,6 +87,18 @@ public class BudgetInfo {
 
     public void setBudgetBalance(double budgetBalance) {
         mBudgetBalance = budgetBalance;
+    }
+
+    @Override
+    public int compareTo(BudgetInfo budgetInfo) {
+        //倒序排序
+        if (this.mBudgetBalance < budgetInfo.getBudgetBalance()){
+            return 1;
+        }else if(this.mBudgetBalance > budgetInfo.getBudgetBalance()){
+            return -1;
+        }else{
+            return 0;
+        }
     }
 
     public enum BudgetStatus{

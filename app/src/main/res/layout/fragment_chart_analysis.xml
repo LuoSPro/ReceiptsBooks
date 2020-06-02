@@ -9,14 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="14dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/main_pie_chart"
+        app:layout_constraintBottom_toTopOf="@+id/chart_analysis_pie_chart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/main_pie_chart"
-        app:layout_constraintTop_toTopOf="@+id/guideline8"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintStart_toEndOf="@+id/chart_analysis_pie_chart"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="24dp"
@@ -32,15 +30,8 @@
 
     </LinearLayout>
 
-    <include
-        layout="@layout/include_setting_tool_bar"
-        app:layout_constraintBottom_toTopOf="@+id/guideline8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/main_pie_chart"
+        android:id="@+id/chart_analysis_pie_chart"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginEnd="4dp"
@@ -49,14 +40,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.165" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.08" />
+        app:layout_constraintVertical_bias="0.07" />
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -68,7 +52,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_pie_chart"
+        app:layout_constraintTop_toBottomOf="@+id/chart_analysis_pie_chart"
         app:layout_constraintVertical_bias="0.0">
 
         <ImageView
@@ -86,7 +70,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/chart_analysis_pie_chart_rv_product_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

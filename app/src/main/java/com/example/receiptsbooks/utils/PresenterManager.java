@@ -1,6 +1,7 @@
 package com.example.receiptsbooks.utils;
 
 import com.example.receiptsbooks.presenter.IBudgetCenterPresenter;
+import com.example.receiptsbooks.presenter.IChartAnalysisPresenter;
 import com.example.receiptsbooks.presenter.IListCategoryPagerPresenter;
 import com.example.receiptsbooks.presenter.IListPresenter;
 import com.example.receiptsbooks.presenter.IReceiptDetailsPresenter;
@@ -10,6 +11,7 @@ import com.example.receiptsbooks.presenter.IStoreCategoryPagerPresenter;
 import com.example.receiptsbooks.presenter.IStorePresenter;
 import com.example.receiptsbooks.presenter.ITicketPresenter;
 import com.example.receiptsbooks.presenter.impl.BudgetCenterPresenterImpl;
+import com.example.receiptsbooks.presenter.impl.ChartAnalysisPresenterImpl;
 import com.example.receiptsbooks.presenter.impl.HistoriesPresenterImpl;
 import com.example.receiptsbooks.presenter.impl.HomePresenterImpl;
 import com.example.receiptsbooks.presenter.impl.ListCategoryPagerPresenter;
@@ -34,6 +36,7 @@ public class PresenterManager {
     private final IReceiptInfoPresenter mReceiptInfoPresenter;
     private final HistoriesPresenterImpl mHistoriesPresenter;
     private final IBudgetCenterPresenter mBudgetCenterPresenter;
+    private final IChartAnalysisPresenter mChartAnalysisPresenter;
 
     public static PresenterManager getInstance() {
         return ourInstance;
@@ -51,6 +54,11 @@ public class PresenterManager {
         mReceiptInfoPresenter = new ReceiptInfoPresenterImpl();
         mHistoriesPresenter = new HistoriesPresenterImpl();
         mBudgetCenterPresenter = new BudgetCenterPresenterImpl();
+        mChartAnalysisPresenter = new ChartAnalysisPresenterImpl();
+    }
+
+    public IChartAnalysisPresenter getChartAnalysisPresenter() {
+        return mChartAnalysisPresenter;
     }
 
     public IBudgetCenterPresenter getBudgetCenterPresenter() {

@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <View
-        android:id="@+id/budget_center_gray_layout"
+        android:id="@+id/chart_analysis_gray_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#66000000"
@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <include
-        android:id="@+id/budget_center_tool_bar"
+        android:id="@+id/chart_analysis_tool_bar"
         layout="@layout/include_setting_tool_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,6 +29,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/budget_center_tool_bar"/>
+        app:layout_constraintTop_toBottomOf="@+id/chart_analysis_tool_bar"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

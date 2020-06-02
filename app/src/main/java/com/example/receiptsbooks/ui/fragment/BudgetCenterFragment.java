@@ -67,6 +67,9 @@ public class BudgetCenterFragment extends BaseFragment implements BudgetContentA
     @BindView(R.id.budget_center_tool_bar)
     public RelativeLayout mToolBar;
 
+    @BindView(R.id.setting_tool_bar_tv_title)
+    public TextView mToolBarTitle;
+
     @BindView(R.id.budget_center_gray_layout)
     public View mGrayLayout;
 
@@ -100,6 +103,8 @@ public class BudgetCenterFragment extends BaseFragment implements BudgetContentA
 
     @Override
     protected void initView(View rootView) {
+        //设置标题
+        mToolBarTitle.setText("预算中心");
         //刷新按钮可见
         mRefreshBudgetBtn.setVisibility(View.VISIBLE);
         mBudgetList.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -294,7 +294,7 @@ public class HomeFragment extends BaseFragment implements PermissionInterface, I
                     .countable(false)//有序图片,当选择时，会根据选择的顺序标明1234...
                     .capture(true)//使用拍照功能，下面两行必须连用
                     .captureStrategy(
-                            new CaptureStrategy(true, "com.example.receiptdemoone.fileprovider", "test"))//存储路径
+                            new CaptureStrategy(true, "com.example.receiptbooks.fileprovider", "test"))//存储路径
                     .maxSelectable(1)//最多选择个数
                     .gridExpectedSize(
                             getResources().getDimensionPixelSize(R.dimen.grid_expected_size))//便于展示界面适配不同屏幕的手机
