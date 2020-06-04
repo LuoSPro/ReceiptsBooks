@@ -136,6 +136,7 @@ public class ReceiptInfoActivity extends BaseActivity implements IReceiptInfoCal
 
     private void onSaveClick() {
         //保存数据
+        mReceiptInfo.setReceiptPhoto(mReceiptImagePath);
         mReceiptInfoPresenter.saveReceiptToDB(this,mReceiptInfo,mReceiptImagePath);
     }
 

@@ -31,6 +31,6 @@ public interface ReceiptInfoDao {
     @Query("SELECT * FROM receipt_info_table ORDER BY receipt_date DESC")
     LiveData<List<ReceiptInfoBean>> getAllReceiptInfoByDate();
 
-    @Query("SELECT * FROM receipt_info_table WHERE receipt_date=:date AND total_price=:totalPrice")
-    LiveData<List<ReceiptInfoBean>> queryReceiptExists(Date date, double totalPrice);
+    @Query("SELECT * FROM receipt_info_table WHERE receipt_date=:date AND total_price=:totalPrice AND receipt_photo_path LIKE :receiptPhotoPath")
+    LiveData<List<ReceiptInfoBean>> queryReceiptExists(Date date, double totalPrice,String receiptPhotoPath);
 }

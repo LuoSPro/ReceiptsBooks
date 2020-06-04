@@ -47,7 +47,7 @@ public class ReceiptInfoRepository {
     }
 
     public LiveData<List<ReceiptInfoBean>> queryReceiptExists(ReceiptInfo receiptInfo) {
-        return mInfoDao.queryReceiptExists(DateUtils.stringToData(receiptInfo.getDate()),receiptInfo.getTotalPrice());
+        return mInfoDao.queryReceiptExists(DateUtils.stringToData(receiptInfo.getDate()),receiptInfo.getTotalPrice(),receiptInfo.getReceiptPhoto());
     }
 
     //插入
