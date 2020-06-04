@@ -2,7 +2,6 @@ package com.example.receiptsbooks.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -165,17 +164,15 @@ public class ReceiptDetailsActivity extends BaseActivity implements IReceiptDeta
         //判断SDK的版本
         //标题栏的上方显示了一块空白区域，感觉像是没有隐藏Toolbar导致的，但是试了之后发现
         //不是Toolbar的问题，是版本问题。我的是android4.2.2的在android5.0就会这样
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark,null));//改变状态栏颜色（可以和应用的标题颜色一样）
-            window.setNavigationBarColor(Color.TRANSPARENT);
-        }
+        Window window = getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark,null));//改变状态栏颜色（可以和应用的标题颜色一样）
+        window.setNavigationBarColor(Color.TRANSPARENT);
         //在设置setContentView之前调用
         return R.layout.activity_receipt_details;
     }

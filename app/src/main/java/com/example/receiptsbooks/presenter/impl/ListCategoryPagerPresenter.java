@@ -3,7 +3,6 @@ package com.example.receiptsbooks.presenter.impl;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.receiptsbooks.presenter.IListCategoryPagerPresenter;
@@ -29,41 +28,40 @@ public class ListCategoryPagerPresenter implements IListCategoryPagerPresenter {
                 callback.onLoading();
             }
         }
-        mReceiptInfoViewModel = ViewModelProviders.of(fragment).get(ReceiptInfoViewModel.class);
-        mProductViewModel = ViewModelProviders.of(fragment).get(ProductViewModel.class);
+        if (mReceiptInfoViewModel == null) {
+            mReceiptInfoViewModel = ViewModelProviders.of(fragment).get(ReceiptInfoViewModel.class);
+        }
+        if (mProductViewModel == null) {
+            mProductViewModel = ViewModelProviders.of(fragment).get(ProductViewModel.class);
+        }
         if (beginDate == null && endDate == null){
             LiveData<List<ReceiptAndProduct>> receiptAndProductFromType = mProductViewModel.getReceiptAndProductByType(category);
-            receiptAndProductFromType.observe(owner, new Observer<List<ReceiptAndProduct>>() {
-                @Override
-                public void onChanged(List<ReceiptAndProduct> receiptAndProducts) {
-                    //通知UI层更新数据
-                    for (IListCategoryPagerCallback callback : mCallbacks) {
-                        if (callback.getCurrentCategory().equals(category)){
-                            //数据为空
-                            if (receiptAndProducts.size() == 0){
-                                callback.onEmpty();
-                            }else{
-                                callback.onContentLoaded(receiptAndProducts);
-                            }
+            receiptAndProductFromType.observe(owner, receiptAndProducts -> {
+                //通知UI层更新数据
+                for (IListCategoryPagerCallback callback : mCallbacks) {
+                    if (callback.getCurrentCategory().equals(category)){
+                        //数据为空
+                        if (receiptAndProducts.size() == 0){
+                            callback.onEmpty();
+                        }else{
+                            callback.onContentLoaded(receiptAndProducts);
                         }
                     }
                 }
             });
         }else{
             //根据时间筛选
+            assert beginDate != null;
             LiveData<List<ReceiptAndProduct>> receiptAndProductFromDate = mProductViewModel.getReceiptAndProductByDate(DateUtils.converterDate(beginDate), DateUtils.converterDate(endDate));
-            receiptAndProductFromDate.observe(owner, new Observer<List<ReceiptAndProduct>>() {
-                @Override
-                public void onChanged(List<ReceiptAndProduct> receiptAndProducts) {
-                    //通知UI层更新数据
-                    for (IListCategoryPagerCallback callback : mCallbacks) {
-                        if (callback.getCurrentCategory().equals(category)){
-                            //数据为空
-                            if (receiptAndProducts.size() == 0){
-                                callback.onEmpty();
-                            }else{
-                                callback.onContentLoaded(receiptAndProducts);
-                            }
+            receiptAndProductFromDate.observe(owner, receiptAndProducts -> {
+                //通知UI层更新数据
+                for (IListCategoryPagerCallback callback : mCallbacks) {
+                    if (callback.getCurrentCategory().equals(category)){
+                        //数据为空
+                        if (receiptAndProducts.size() == 0){
+                            callback.onEmpty();
+                        }else{
+                            callback.onContentLoaded(receiptAndProducts);
                         }
                     }
                 }

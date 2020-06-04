@@ -11,6 +11,9 @@ public class BudgetInfo implements Comparable<BudgetInfo>{
     private double mBudgetBalance;
     private boolean mIsSetting;
 
+    public BudgetInfo() {
+    }
+
     public int getDateId() {
         return dateId;
     }
@@ -54,7 +57,7 @@ public class BudgetInfo implements Comparable<BudgetInfo>{
     public String getBudgetStatus() {
         if (mBudgetStatus == BudgetStatus.BALANCE){
             return "余额";
-        }else if (mBudgetStatus == BudgetStatus.SPEND){
+        }else if (mBudgetStatus == BudgetStatus.EXPEND){
             return "支出";
         }else if (mBudgetStatus == BudgetStatus.OVERSPEND){
             return "超支";
@@ -102,6 +105,6 @@ public class BudgetInfo implements Comparable<BudgetInfo>{
     }
 
     public enum BudgetStatus{
-        BALANCE,SPEND,OVERSPEND
+        BALANCE, EXPEND,OVERSPEND
     }
 }

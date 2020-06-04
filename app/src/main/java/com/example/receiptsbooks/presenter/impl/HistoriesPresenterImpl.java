@@ -2,15 +2,11 @@ package com.example.receiptsbooks.presenter.impl;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.receiptsbooks.presenter.IHistoriesPresenter;
-import com.example.receiptsbooks.room.bean.ReceiptAndProduct;
 import com.example.receiptsbooks.room.viewmodel.ProductViewModel;
 import com.example.receiptsbooks.view.IHistoriesCallback;
-
-import java.util.List;
 
 public class HistoriesPresenterImpl implements IHistoriesPresenter {
     private IHistoriesCallback mCallback;
@@ -21,16 +17,15 @@ public class HistoriesPresenterImpl implements IHistoriesPresenter {
         if (mCallback != null) {
             mCallback.onLoading();
         }
-        mProductViewModel = ViewModelProviders.of(fragment).get(ProductViewModel.class);
-        mProductViewModel.getAllProductLive().observe(owner, new Observer<List<ReceiptAndProduct>>() {
-            @Override
-            public void onChanged(List<ReceiptAndProduct> receiptAndProducts) {
-                if (mCallback != null) {
-                    if (receiptAndProducts.size() == 0){
-                        mCallback.onEmpty();
-                    }else {
-                        mCallback.onAllReceiptHistoriesLoaded(receiptAndProducts);
-                    }
+        if (mProductViewModel == null) {
+            mProductViewModel = ViewModelProviders.of(fragment).get(ProductViewModel.class);
+        }
+        mProductViewModel.getAllProductLive().observe(owner, receiptAndProducts -> {
+            if (mCallback != null) {
+                if (receiptAndProducts.size() == 0){
+                    mCallback.onEmpty();
+                }else {
+                    mCallback.onAllReceiptHistoriesLoaded(receiptAndProducts);
                 }
             }
         });

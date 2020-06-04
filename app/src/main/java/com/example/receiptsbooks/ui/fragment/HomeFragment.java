@@ -1,9 +1,12 @@
 package com.example.receiptsbooks.ui.fragment;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.util.Log;
@@ -11,8 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.receiptsbooks.R;
@@ -26,6 +33,7 @@ import com.example.receiptsbooks.ui.activity.IMainActivity;
 import com.example.receiptsbooks.ui.activity.MainActivity;
 import com.example.receiptsbooks.ui.activity.ReceiptDetailsActivity;
 import com.example.receiptsbooks.ui.activity.ReceiptInfoActivity;
+import com.example.receiptsbooks.ui.adapter.HistoryContentAdapter;
 import com.example.receiptsbooks.ui.adapter.HomeLooperPagerAdapter;
 import com.example.receiptsbooks.utils.CameraFilePathUtil;
 import com.example.receiptsbooks.utils.Constants;
@@ -43,21 +51,16 @@ import com.zhihu.matisse.engine.impl.GlideEngine;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zhihu.matisse.internal.utils.MediaStoreCompat;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import me.jessyan.autosize.internal.CustomAdapt;
 
-public class HomeFragment extends BaseFragment implements PermissionInterface, IHomeCallback, CustomAdapt, IReceiptInfoCallback, IHistoriesCallback, HomeLooperPagerAdapter.OnHomeLooperClickListener {
-    //选择上传图片的集合(方便多张图片上传)
-    private List<Uri> mSelected;
-    //权限工具类
-    private PermissionHelper mPermissionHelper;
-    //选择照片后的Code
-    private static final int REQUEST_CODE_CHOOSE = 1000;
-    private static final int PERMISSIONS_REQUEST_CODE = 10002;
+public class HomeFragment extends BaseFragment implements PermissionInterface, IHomeCallback, CustomAdapt, IReceiptInfoCallback, IHistoriesCallback, HomeLooperPagerAdapter.OnHomeLooperClickListener, HistoryContentAdapter.OnListContentItemClickListener {
 
     @BindView(R.id.home_looper_pager)
     public ViewPager mLooperPager;
@@ -65,10 +68,43 @@ public class HomeFragment extends BaseFragment implements PermissionInterface, I
     @BindView(R.id.home_point_container)
     public LinearLayout mPaintContainer;
 
+    @BindView(R.id.home_tv_total_expend)
+    public TextView mTotalExpendTv;
+
+    @BindView(R.id.home_tv_total_budget)
+    public TextView mTotalBudgetTv;
+
+    @BindView(R.id.home_tv_cur_month_expend_text)
+    public TextView mCurMonthExpendTv;
+
+    @BindView(R.id.home_tv_cur_month_budget_text)
+    public TextView mCurMonthBudgetTv;
+
+    @BindView(R.id.home_tv_today_total_expend)
+    public TextView mTodayTotalExpend;
+
+    @BindView(R.id.home_rv_today_record_list)
+    public RecyclerView mTodayReceiptList;
+
+    @BindView(R.id.home_ll_expend)
+    public LinearLayout mExpendBtn;
+
+    @BindView(R.id.home_ll_budget)
+    public LinearLayout mBudgetBtn;
+
     private IHomePresenter mHomePresenter = null;
     private MediaStoreCompat mMediaStoreCompat;
     private IReceiptInfoPresenter mReceiptInfoPresenter = null;
     private HomeLooperPagerAdapter mHomeLooperPagerAdapter;
+    private HistoryContentAdapter mContentAdapter;
+    //选择上传图片的集合(方便多张图片上传)
+    private List<Uri> mSelected;
+    //权限工具类
+    private PermissionHelper mPermissionHelper;
+    //选择照片后的Code
+    private static final int REQUEST_CODE_CHOOSE = 1000;
+    private static final int PERMISSIONS_REQUEST_CODE = 10002;
+    private double mTotalExpend;
 
     @Override
     protected int getRootViewResId() {
@@ -78,16 +114,31 @@ public class HomeFragment extends BaseFragment implements PermissionInterface, I
     @Override
     protected void loadData() {
         //加载数据
-        setUpState(State.SUCCESS);
+        mHomePresenter.getCurMonthTotalExpend(this,this);
+        mHomePresenter.getTodayReceiptInfos(this,this);
     }
 
     @Override
     protected void initView(View rootView) {
+        //这里是因为没找到解决办法才放在这里，因为如果把loading放到presenter层，当数据库插入失败时，界面任然会loading
+        //因为liveData无法观察到数据的变化，所以不会去调用success界面    ---------不是这个原因，是因为这里实现了ReceiptInfoCallback，那边loading，这边也会loading
+        //setUpState(State.LOADING);
+        //设置布局管理器
+        mTodayReceiptList.setLayoutManager(new LinearLayoutManager(getContext()));
+        //设置间距
+        mTodayReceiptList.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                outRect.top = SizeUtils.dip2px(getContext(),1f);
+            }
+        });
+        //创建适配器
+        mContentAdapter = new HistoryContentAdapter();
+        //设置适配器
+        mTodayReceiptList.setAdapter(mContentAdapter);
         //初始化并发起权限申请
-        mPermissionHelper = new PermissionHelper(getActivity(), this);
+        mPermissionHelper = new PermissionHelper(Objects.requireNonNull(getActivity()), this);
         mPermissionHelper.requestPermissions();
-        //讲主页面显示出来
-        setUpState(State.SUCCESS);
         //创建轮播图适配器
         mHomeLooperPagerAdapter = new HomeLooperPagerAdapter();
         ArrayList<Integer> iconList = new ArrayList<Integer>() {{
@@ -141,7 +192,7 @@ public class HomeFragment extends BaseFragment implements PermissionInterface, I
 
     @Override
     protected View loadRootView(LayoutInflater inflater, ViewGroup container) {
-        return inflater.inflate(R.layout.base_fragment_layout,container,false);
+        return inflater.inflate(R.layout.base_home_fragment_layout,container,false);
     }
 
     /**
@@ -149,6 +200,7 @@ public class HomeFragment extends BaseFragment implements PermissionInterface, I
      */
     @Override
     protected void initListener() {
+        mContentAdapter.setOnListContentItemClickListener(this);
         mLooperPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -172,6 +224,24 @@ public class HomeFragment extends BaseFragment implements PermissionInterface, I
             }
         });
         mHomeLooperPagerAdapter.setOnHomeLooperClickListener(this);
+        mExpendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentActivity activity = getActivity();
+                if (activity instanceof IMainActivity){
+                    ((IMainActivity)activity).homeToChartAnalysis();
+                }
+            }
+        });
+        mBudgetBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentActivity activity = getActivity();
+                if (activity instanceof IMainActivity){
+                    ((IMainActivity)activity).homeToBudgetCenter();
+                }
+            }
+        });
     }
 
     private void updateLooperIndicator(int targetPosition) {
@@ -243,6 +313,7 @@ public class HomeFragment extends BaseFragment implements PermissionInterface, I
     @Override
     public void requestPermissionsFail() {
         //获取权限失败
+
     }
 
     @Override
@@ -272,12 +343,24 @@ public class HomeFragment extends BaseFragment implements PermissionInterface, I
 
     @Override
     public void onLoading() {
+        setUpState(State.LOADING);
+    }
 
+    @Override
+    protected View loadLoadingView(LayoutInflater inflater, ViewGroup container) {
+        //改变加载的布局
+        return inflater.inflate(R.layout.fragment_home_loading,container,false);
     }
 
     @Override
     public void onEmpty() {
+        setUpState(State.EMPTY);
+    }
 
+    @Override
+    protected View loadEmptyView(LayoutInflater inflater, ViewGroup container) {
+        //改变空的布局
+        return inflater.inflate(R.layout.fragment_home_empty,container,false);
     }
 
     @Override
@@ -316,5 +399,41 @@ public class HomeFragment extends BaseFragment implements PermissionInterface, I
             Intent intent = new Intent(getContext(), ReceiptDetailsActivity.class);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onTotalExpendLoaded(double totalExpend) {
+        this.mTotalExpend = totalExpend;
+        mTotalExpendTv.setText(new DecimalFormat("0.00").format(totalExpend));
+    }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onTotalBudgetLoaded(double totalBudget) {
+        mTotalBudgetTv.setTextColor(Color.WHITE);
+        if (totalBudget == 0){
+            mTotalBudgetTv.setText("未设置");
+        }else if (totalBudget-mTotalExpend>0){
+            mTotalBudgetTv.setText(new DecimalFormat("0.00").format(totalBudget-mTotalExpend));
+        }else{
+            mTotalBudgetTv.setText("已超支"+new DecimalFormat("0.00").format(mTotalExpend-totalBudget));
+            mTotalBudgetTv.setTextColor(getContext().getResources().getColor(R.color.colorExcBudget,null));
+        }
+    }
+
+    @Override
+    public void onReceiptInfosLoaded(List<ReceiptAndProduct> receiptAndProducts, double todayExpend) {
+        mTodayTotalExpend.setText(new DecimalFormat("0.00").format(todayExpend));
+        mContentAdapter.setData(receiptAndProducts,"");
+        setUpState(State.SUCCESS);
+    }
+
+    @Override
+    public void onItemClick(ReceiptAndProduct item) {
+        int receiptId = item.getReceiptInfoBean().getId();
+        //列表内容被点击
+        Intent intent = new Intent(getContext(), ReceiptDetailsActivity.class);
+        intent.putExtra(Constants.KEY_RECEIPT_DETAILS_RECEIPT_ID,receiptId);
+        startActivity(intent);
     }
 }

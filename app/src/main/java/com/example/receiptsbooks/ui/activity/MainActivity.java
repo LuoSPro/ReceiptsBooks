@@ -48,6 +48,7 @@ public class MainActivity extends BaseActivity implements IMainActivity{
     private Exit mExit;
     private BudgetCenterFragment mBudgetCenterFragment;
     private ChartAnalysisFragment mChartAnalysisFragment;
+    private boolean mIsFromHome = false;
 
 
     @Override
@@ -155,9 +156,17 @@ public class MainActivity extends BaseActivity implements IMainActivity{
         } else if(lastOneFragment == mSearchFragment) {
             switch2Store();
         }else if (lastOneFragment == mBudgetCenterFragment){
-            switch2Setting();
+            if (mIsFromHome){
+                switch2Home();
+            }else{
+                switch2Setting();
+            }
         }else if (lastOneFragment == mChartAnalysisFragment){
-            switch2Setting();
+            if (mIsFromHome){
+                switch2Home();
+            }else{
+                switch2Setting();
+            }
         }else {
             // handle by activity
             pressAgainExit();
@@ -219,6 +228,7 @@ public class MainActivity extends BaseActivity implements IMainActivity{
      */
     @Override
     public void switch2BudgetCenter() {
+        this.mIsFromHome = false;
         mNavigationView.setVisibility(View.GONE);
         switchFragment(mBudgetCenterFragment);
     }
@@ -228,6 +238,7 @@ public class MainActivity extends BaseActivity implements IMainActivity{
      */
     @Override
     public void switch2ChartAnalysis() {
+        this.mIsFromHome = false;
         mNavigationView.setVisibility(View.GONE);
         switchFragment(mChartAnalysisFragment);
     }
@@ -239,6 +250,18 @@ public class MainActivity extends BaseActivity implements IMainActivity{
     public void switch2Setting() {
         mNavigationView.setVisibility(View.VISIBLE);
         switchFragment(mSettingFragment);
+    }
+
+    @Override
+    public void homeToBudgetCenter() {
+        switch2BudgetCenter();
+        this.mIsFromHome = true;
+    }
+
+    @Override
+    public void homeToChartAnalysis() {
+        switch2ChartAnalysis();
+        this.mIsFromHome = true;
     }
 
     /**

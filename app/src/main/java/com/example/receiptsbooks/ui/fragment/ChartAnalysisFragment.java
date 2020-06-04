@@ -11,7 +11,6 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,7 +20,6 @@ import com.example.receiptsbooks.base.State;
 import com.example.receiptsbooks.model.domain.BudgetInfo;
 import com.example.receiptsbooks.presenter.IChartAnalysisPresenter;
 import com.example.receiptsbooks.room.bean.ReceiptAndProduct;
-import com.example.receiptsbooks.ui.activity.IMainActivity;
 import com.example.receiptsbooks.ui.adapter.BudgetCenterDateListAdapter;
 import com.example.receiptsbooks.ui.adapter.ChartAnalysisProductAdapter;
 import com.example.receiptsbooks.utils.AnimationUtil;
@@ -122,10 +120,7 @@ public class ChartAnalysisFragment extends BaseFragment implements IChartAnalysi
         mToolbarBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentActivity activity = getActivity();
-                if (activity instanceof IMainActivity){
-                    ((IMainActivity)activity).switch2Setting();
-                }
+                getActivity().onBackPressed();
             }
         });
         mDateSelectBtn.setOnClickListener(new View.OnClickListener() {

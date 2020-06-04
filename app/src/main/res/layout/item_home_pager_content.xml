@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="160dp"
-    android:layout_height="160dp"
+    android:layout_width="140dp"
+    android:layout_height="140dp"
     android:orientation="vertical"
     android:gravity="center">
 
     <ImageView
         android:id="@+id/item_home_pager_content_iv"
-        android:layout_width="80dp"
-        android:layout_height="80dp"/>
+        android:layout_width="70dp"
+        android:layout_height="70dp"/>
 
     <TextView
         android:id="@+id/item_home_pager_content_tv"

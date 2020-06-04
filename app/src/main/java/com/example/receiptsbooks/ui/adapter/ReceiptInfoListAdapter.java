@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 public class ReceiptInfoListAdapter extends RecyclerView.Adapter<ReceiptInfoListAdapter.InnerHolder> {
     private List<IBaseProduct> mData = new ArrayList<>();
     private OnDetailsContentItemClickListener mItemListener = null;
+    private double mTotalPrice;
 
     @NonNull
     @Override
@@ -57,6 +58,14 @@ public class ReceiptInfoListAdapter extends RecyclerView.Adapter<ReceiptInfoList
         mData.clear();
         mData.addAll(produces);
         notifyDataSetChanged();
+    }
+
+    public double getAllProductPrice(){
+        mTotalPrice = 0;
+        for (int i = 0; i < mData.size(); i++) {
+            mTotalPrice += mData.get(i).getPrice();
+        }
+        return mTotalPrice;
     }
 
     public void notifyProductItemChange(int position,IBaseProduct product){

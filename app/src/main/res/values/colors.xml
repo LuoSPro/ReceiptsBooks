@@ -19,6 +19,7 @@
     <color name="colorTmall">#D0021B</color>
     <color name="budget_progress_bar_exc">#7E0067</color>
     <color name="colorPageBg">#EEEEEE</color>
+    <color name="colorExcBudget">#B3009B</color>
 
 <!--    <color name="colorMainBlue">#39C2D0</color>-->
     <color name="colorMainBlue">#4C9BFD</color>

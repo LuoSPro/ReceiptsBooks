@@ -56,14 +56,14 @@ public class BgRelativeLayout extends RelativeLayout {
         for (int i = 0; i < getWidth(); i++) {
 
             // y = A * sin( wx + b) + h ; A： 浪高； w：周期；b：初相；
-            float endY = (float) (20 * Math.sin(2 * Math.PI / getWidth() * i + mOffset1) + 350);
+            float endY = (float) (20 * Math.sin(2 * Math.PI / getWidth() * i + mOffset1) + 330);
             //startY: 0就是从最顶部开始
             //h:是竖直方向的偏移量
             //画第一条波浪
             canvas.drawLine(i, 0, i, endY, mWavePaint);
 
             //画第二条波浪
-            float endY2 = (float) (20 * Math.sin(2 * Math.PI / getWidth() * i + mOffset2) + 350);
+            float endY2 = (float) (20 * Math.sin(2 * Math.PI / getWidth() * i + mOffset2) + 330);
             canvas.drawLine(i, 0, i, endY2, mWavePaint);
         }
 

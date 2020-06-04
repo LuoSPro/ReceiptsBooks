@@ -3,7 +3,6 @@ package com.example.receiptsbooks.presenter.impl;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.receiptsbooks.model.domain.BudgetInfo;
@@ -23,7 +22,6 @@ import java.util.List;
 public class ChartAnalysisPresenterImpl implements IChartAnalysisPresenter {
     private IChartAnalysisCallback mCallBack;
     private ProductViewModel mProductViewModel;
-    private LiveData<List<ReceiptAndProduct>> mSelectedData;
     private double mTotalExpend;
 
     @Override
@@ -34,29 +32,27 @@ public class ChartAnalysisPresenterImpl implements IChartAnalysisPresenter {
         if (mProductViewModel == null) {
             mProductViewModel = ViewModelProviders.of(fragment).get(ProductViewModel.class);
         }
+        LiveData<List<ReceiptAndProduct>> selectedDataLiveData;
         if (selectedDate == 1){
             //今天
-            mSelectedData = mProductViewModel.getReceiptAndProductByDate(System.currentTimeMillis(), System.currentTimeMillis());
+            selectedDataLiveData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getTodayStartTime(), DateUtils.getTodayEndTime());
         }else if (selectedDate == 2){
             //本周
-            mSelectedData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getTimesWeekMorning().getTime(), DateUtils.getTimesWeekNight().getTime());
+            selectedDataLiveData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getTimesWeekMorning().getTime(), DateUtils.getTimesWeekNight().getTime());
         }else if (selectedDate == 3){
             //本月
-            mSelectedData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getTimesMonthMorning().getTime(), DateUtils.getTimesMonthnight().getTime());
+            selectedDataLiveData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getTimesMonthMorning().getTime(), DateUtils.getTimesMonthnight().getTime());
         }else if (selectedDate == 4){
             //本季
-            mSelectedData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getCurrentQuarterStartTime().getTime(),DateUtils.getCurrentQuarterEndTime().getTime());
+            selectedDataLiveData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getCurrentQuarterStartTime().getTime(),DateUtils.getCurrentQuarterEndTime().getTime());
         }else {
             //本年
-            mSelectedData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getCurrentYearStartTime().getTime(), DateUtils.getCurrentYearEndTime().getTime());
+            selectedDataLiveData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getCurrentYearStartTime().getTime(), DateUtils.getCurrentYearEndTime().getTime());
         }
-        mSelectedData.observe(owner, new Observer<List<ReceiptAndProduct>>() {
-            @Override
-            public void onChanged(List<ReceiptAndProduct> receiptAndProducts) {
-                if (mCallBack != null) {
-                    List<BudgetInfo> budgetInfos = changeBudgetBean(receiptAndProducts);
-                    mCallBack.onProductInfoLoaded(budgetInfos,mTotalExpend,receiptAndProducts);
-                }
+        selectedDataLiveData.observe(owner, receiptAndProducts -> {
+            if (mCallBack != null) {
+                List<BudgetInfo> budgetInfos = changeBudgetBean(receiptAndProducts);
+                mCallBack.onProductInfoLoaded(budgetInfos,mTotalExpend,receiptAndProducts);
             }
         });
     }

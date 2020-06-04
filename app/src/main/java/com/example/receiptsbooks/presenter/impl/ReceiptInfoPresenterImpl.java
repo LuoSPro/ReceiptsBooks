@@ -4,9 +4,9 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.receiptsbooks.model.Api;
@@ -23,6 +23,7 @@ import com.example.receiptsbooks.utils.LogUtils;
 import com.example.receiptsbooks.utils.NetworkUtils;
 import com.example.receiptsbooks.utils.RetrofitManager;
 import com.example.receiptsbooks.utils.ToastUtil;
+import com.example.receiptsbooks.view.IHomeCallback;
 import com.example.receiptsbooks.view.IReceiptInfoCallback;
 
 import java.io.File;
@@ -42,7 +43,6 @@ public class ReceiptInfoPresenterImpl implements IReceiptInfoPresenter {
     private ReceiptInfoViewModel mReceiptInfoViewModel;
     private ProductViewModel mProductViewModel;
     private Handler mMainThread = new Handler(Looper.getMainLooper());
-    private boolean isRepeatSave = false;
 
     /**
      * 向服务器请求数据
@@ -51,9 +51,11 @@ public class ReceiptInfoPresenterImpl implements IReceiptInfoPresenter {
      */
     @Override
     public void getReceiptInfo(String filePath,Context context) {
-        if (mCallback != null) {
+        //这里，因为我是先在homeFragment去预加载数据，所以每次这里onLoading都会影响homeFragment的显示
+        if (mCallback != null&&!(mCallback instanceof IHomeCallback)) {
             mCallback.onLoading();
         }
+        //组装需要上传的文件
         File file = new File(filePath);
         RequestBody body = RequestBody.create(MediaType.parse("image/jpg"),file);
         MultipartBody.Part part = MultipartBody.Part.createFormData("file","file",body);
@@ -62,7 +64,7 @@ public class ReceiptInfoPresenterImpl implements IReceiptInfoPresenter {
         Call<ReceiptInfo> task = api.getReceiptInfo(part);
         task.enqueue(new Callback<ReceiptInfo>() {
             @Override
-            public void onResponse(Call<ReceiptInfo> call, Response<ReceiptInfo> response) {
+            public void onResponse(@NonNull Call<ReceiptInfo> call, @NonNull Response<ReceiptInfo> response) {
                 //数据结果
                 int code = response.code();
                 LogUtils.d(ReceiptInfoPresenterImpl.this,"getReceiptContent code ==> " + code);
@@ -87,7 +89,7 @@ public class ReceiptInfoPresenterImpl implements IReceiptInfoPresenter {
             }
 
             @Override
-            public void onFailure(Call<ReceiptInfo> call, Throwable t) {
+            public void onFailure(@NonNull Call<ReceiptInfo> call, @NonNull Throwable t) {
                 //加载失败
                 LogUtils.d(ReceiptInfoPresenterImpl.this,"getReceiptContent onFailure + " + t);
                 if (mCallback != null) {
@@ -108,33 +110,21 @@ public class ReceiptInfoPresenterImpl implements IReceiptInfoPresenter {
         mProductViewModel = ViewModelProviders.of(activity).get(ProductViewModel.class);
         //插入前，检查小票数据是否已经存在
         LiveData<List<ReceiptInfoBean>> receiptInfoBeanLive = mReceiptInfoViewModel.queryReceiptExists(receiptInfo);
-        receiptInfoBeanLive.observe(activity, new Observer<List<ReceiptInfoBean>>() {
-            @Override
-            public void onChanged(List<ReceiptInfoBean> receiptInfoBeans) {
-                if (receiptInfoBeans.size() != 0){
-//                    if (isRepeatSave){
-//                        return;
-//                    }
+        receiptInfoBeanLive.observe(activity, receiptInfoBeans -> {
+            if (receiptInfoBeans.size() != 0){
+                //如果是数据添加到数据库的通知，间隔应该不超过10000000秒，所以这种提示不必展示给用户
+                if (System.currentTimeMillis()-receiptInfoBeans.get(0).getSaveData().getTime()>600){
                     //如果查询到数据就说明这个数据已经存在了
-                    mMainThread.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            //ToastUtil.showToast("保存失败, 这张小票在"+ DateUtils.dateToString(receiptInfoBeans.get(0).getSaveData(),false)+"已保存");
-                        }
-                    });
-                }else{
-                    //定义接口对象，等到小票插入成功后，再带着receiptId来回调这里的onRespond方法
-                    ReceiptInfoRepository.ResponseCallback responseCallback = new ReceiptInfoRepository.ResponseCallback() {
-                        @Override
-                        public void onRespond(List<Long> receiptId) {
-                            //插入商品
-                            insertProductToDatabase(receiptId.get(0),receiptInfo);
-                        }
-                    };
-                    //插入小票
-                    insertReceiptToDatabase(responseCallback,receiptInfo,receiptPhotoPath);
-                    isRepeatSave = true;
+                    mMainThread.post(() -> ToastUtil.showToast("保存失败, 这张小票在"+ DateUtils.dateToString(receiptInfoBeans.get(0).getSaveData(),false)+"已保存"));
                 }
+            }else{
+                //定义接口对象，等到小票插入成功后，再带着receiptId来回调这里的onRespond方法
+                ReceiptInfoRepository.ResponseCallback responseCallback = receiptId -> {
+                    //插入商品
+                    insertProductToDatabase(receiptId.get(0),receiptInfo);
+                };
+                //插入小票
+                insertReceiptToDatabase(responseCallback,receiptInfo,receiptPhotoPath);
             }
         });
 
@@ -156,12 +146,7 @@ public class ReceiptInfoPresenterImpl implements IReceiptInfoPresenter {
             ProductBean productBean = new ProductBean((int) receiptId,product.getName(),product.getPrice(),product.getType());
             mProductViewModel.insertProduct(productBean);
         }
-        mMainThread.post(new Runnable() {
-            @Override
-            public void run() {
-                ToastUtil.showToast("小票数据保存成功");
-            }
-        });
+        mMainThread.post(() -> ToastUtil.showToast("小票数据保存成功"));
     }
 
     @Override

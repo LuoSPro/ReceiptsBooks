@@ -1,5 +1,7 @@
 package com.example.receiptsbooks.base;
 
+import android.annotation.SuppressLint;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -12,6 +14,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private Unbinder mBind;
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +32,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         //View contentContainer = getWindow().getDecorView();
         //contentContainer.setLayerType(View.LAYER_TYPE_SOFTWARE,paint);
         //==========================================
+
+
+        setRequestedOrientation(ActivityInfo .SCREEN_ORIENTATION_PORTRAIT);//竖屏
 
         mBind = ButterKnife.bind(this);
         initView();
@@ -54,7 +60,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mBind == null) {
+        if (mBind != null) {
             mBind.unbind();
         }
         this.release();

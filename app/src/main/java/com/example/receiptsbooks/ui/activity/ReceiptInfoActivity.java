@@ -26,6 +26,7 @@ import com.example.receiptsbooks.ui.adapter.ReceiptInfoListAdapter;
 import com.example.receiptsbooks.ui.custom.TextFlowLayout;
 import com.example.receiptsbooks.utils.Constants;
 import com.example.receiptsbooks.utils.DateUtils;
+import com.example.receiptsbooks.utils.LogUtils;
 import com.example.receiptsbooks.utils.PresenterManager;
 import com.example.receiptsbooks.utils.SizeUtils;
 import com.example.receiptsbooks.view.IReceiptInfoCallback;
@@ -264,6 +265,7 @@ public class ReceiptInfoActivity extends BaseActivity implements IReceiptInfoCal
         mTypeView.setTextList(list,false);
         mTotalPriceTv.setText("总价: " + receiptInfo.getTotalPrice());
         mDateTv.setText("时间: " + DateUtils.dateToString(DateUtils.stringToData(receiptInfo.getDate()),false));
+        LogUtils.d(ReceiptInfoActivity.this,"receipt save date ============> " + DateUtils.stringToData(receiptInfo.getDate()).getTime());
         mCountTv.setText("商品数量: " + products.size());
         //使用Glide框架加载图片
         if (!mIsPreviewStatus){

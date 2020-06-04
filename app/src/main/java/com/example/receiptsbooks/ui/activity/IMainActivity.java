@@ -16,4 +16,7 @@ public interface IMainActivity {
 
     void switch2ChartAnalysis();
 
+    void homeToChartAnalysis();
+
+    void homeToBudgetCenter();
 }

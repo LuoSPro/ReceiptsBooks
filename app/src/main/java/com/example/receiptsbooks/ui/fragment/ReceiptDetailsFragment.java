@@ -61,6 +61,7 @@ import com.previewlibrary.ZoomMediaLoader;
 
 import java.io.File;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -248,12 +249,14 @@ public class ReceiptDetailsFragment extends BaseFragment implements IReceiptDeta
                 if (mReceiptId != -1){
                     mReceiptDetailsPresenter.deleteProductToDB(ReceiptDetailsFragment.this,(ProductBean) product);
                 }
+                updateTotalPrice(mListAdapter.getAllProductPrice());
                 //需要配合CoordinatorLayout使用，不然Snackbar弹起的时候会挡住上面的空间
                 Snackbar.make(requireActivity().findViewById(R.id.receipt_details_fragment_view), "删除了一个商品", Snackbar.LENGTH_SHORT)
                         .setAction("撤销", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 if (OnClickUtils.isFastClick()){
+                                    updateTotalPrice(mListAdapter.getAllProductPrice());
                                     //点击的item的position和实际的不一致——已解决
                                     mListAdapter.notifyProductItemInsert(position, product);
                                     mProducts = mListAdapter.getData();
@@ -507,8 +510,11 @@ public class ReceiptDetailsFragment extends BaseFragment implements IReceiptDeta
             //LogUtils.d(this,"ReceiptPhotoPath"+ mReceiptPhotoPath);
             Glide.with(this).load(mReceiptPhotoPath).into(mReceiptPhotoIv);
             //总金额
-            double totalPrice = mReceiptInfoBean.getTotalPrice();
-            mReceiptTotalPriceTv.setText(totalPrice+"");
+            if (mListAdapter.getAllProductPrice() == 0){
+                mReceiptTotalPriceTv.setText(new DecimalFormat("0.00").format(receiptInfo.getReceiptInfoBean().getTotalPrice()));
+            }else{
+                updateTotalPrice(mListAdapter.getAllProductPrice());
+            }
             //LogUtils.d(this,"TotalPrice"+totalPrice);
             //小票时间
             String receiptDate = DateUtils.dateToString(mReceiptInfoBean.getReceiptDate(), false);
@@ -686,7 +692,13 @@ public class ReceiptDetailsFragment extends BaseFragment implements IReceiptDeta
         if (mReceiptId != -1){
             mReceiptDetailsPresenter.updateProductToDB(this,(ProductBean)productItem);
         }
+        //更新总额
+        updateTotalPrice(mListAdapter.getAllProductPrice());
         ToastUtil.showToast("数据修改成功");
+    }
+
+    private void updateTotalPrice(double allProductPrice) {
+        mReceiptTotalPriceTv.setText(new DecimalFormat("0.00").format(allProductPrice));
     }
 
     public void addProductItem(int position, IBaseProduct productItem) {
@@ -697,6 +709,8 @@ public class ReceiptDetailsFragment extends BaseFragment implements IReceiptDeta
             mReceiptDetailsPresenter.insertProductToDB(this,(ProductBean)productItem);
         }
         mProducts = mListAdapter.getData();
+        //更新总额
+        updateTotalPrice(mListAdapter.getAllProductPrice());
         ToastUtil.showToast("数据添加成功");
     }
 }

@@ -1,45 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.receiptsbooks.ui.custom.BgRelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@color/bgCameraColor">
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/home_looper_pager"
-            android:layout_width="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_height="160dp"/>
-
-        <LinearLayout
-            android:id="@+id/home_point_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="30dp"
-            android:orientation="horizontal"/>
-
-        <TextView
-            android:id="@+id/home_tv_histories"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/shape_home_record_btn_bg"
-            android:gravity="center"
-            android:text="@string/text_home_extract_records"
-            android:textColor="@color/colorWhite"
-            android:layout_alignParentEnd="true" />
-
-    </com.example.receiptsbooks.ui.custom.BgRelativeLayout>
-
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_rv_today_record_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

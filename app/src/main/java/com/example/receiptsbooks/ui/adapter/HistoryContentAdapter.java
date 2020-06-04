@@ -16,6 +16,7 @@ import com.example.receiptsbooks.room.bean.ReceiptAndProduct;
 import com.example.receiptsbooks.room.bean.ReceiptInfoBean;
 import com.example.receiptsbooks.ui.custom.TextFlowLayout;
 import com.example.receiptsbooks.utils.DateUtils;
+import com.example.receiptsbooks.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +88,7 @@ public class HistoryContentAdapter extends RecyclerView.Adapter<HistoryContentAd
 
         @SuppressLint("SetTextI18n")
         public void setData(ReceiptAndProduct receiptAndProduct, String category) {
+            LogUtils.d(HistoryContentAdapter.this,"date ==> " + receiptAndProduct.getReceiptInfoBean().getReceiptDate().getTime());
             Context context = itemView.getContext();
             ReceiptInfoBean receiptInfoBean = receiptAndProduct.getReceiptInfoBean();
             List<ProductBean> productBean = receiptAndProduct.getProductBean();

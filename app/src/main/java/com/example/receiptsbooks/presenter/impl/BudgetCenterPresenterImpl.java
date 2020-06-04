@@ -3,7 +3,6 @@ package com.example.receiptsbooks.presenter.impl;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.receiptsbooks.model.domain.BudgetInfo;
@@ -50,19 +49,16 @@ public class BudgetCenterPresenterImpl implements IBudgetCenterPresenter {
         }
         //如何才能很好的通知到数据库有没有数据呢
         LiveData<Integer> budgetDateSize = mBudgetDateViewModel.queryBudgetDateSize();
-        budgetDateSize.observe(owner, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                if(integer == 0){
-                    //如果数据库没有数据，则加入数据进去
-                    for (int i = 0; i < 5; i++) {
-                        mBudgetDateViewModel.insertDateBean(new BudgetDateBean());
-                        insertBudgetToDB(i+1);
-                    }
+        budgetDateSize.observe(owner, integer -> {
+            if(integer == 0){
+                //如果数据库没有数据，则加入数据进去
+                for (int i = 0; i < 5; i++) {
+                    mBudgetDateViewModel.insertDateBean(new BudgetDateBean());
+                    insertBudgetToDB(i+1);
                 }
-                if (integer >= 5){
-                    getBudgetDateFromDB(owner);
-                }
+            }
+            if (integer >= 5){
+                getBudgetDateFromDB(owner);
             }
         });
 
@@ -72,49 +68,38 @@ public class BudgetCenterPresenterImpl implements IBudgetCenterPresenter {
     private void getBudgetDateFromDB(LifecycleOwner owner) {
         //获得当前要选择的时间段的预算在数据库中的数据
         LiveData<BudgetDateBean> budgetDateBeans = mBudgetDateViewModel.queryBudgetDateById(mCurrentSelectedDate);
-        budgetDateBeans.observe(owner, new Observer<BudgetDateBean>() {
-            @Override
-            public void onChanged(BudgetDateBean budgetDateBean) {
-                mCallback.onBudgetDataLoaded(budgetDateBean);
-            }
-        });
+        budgetDateBeans.observe(owner, budgetDateBean -> mCallback.onBudgetDataLoaded(budgetDateBean));
         //获得对应时间下的预算列表
         LiveData<List<BudgetBean>> selectedBudgetList = mBudgetViewModel.queryBudgetInfoByDateId(mCurrentSelectedDate);
-        selectedBudgetList.observe(owner, new Observer<List<BudgetBean>>() {
-            @Override
-            public void onChanged(List<BudgetBean> budgetBeans) {
-                //TODO:这里每次都会刷新两次，并且其中一次的budgetBeans的dateId和mCurrentSelectedDate不一样，所以这里才加了这个判断，希望后面能来搞清楚为什么会这样
-                if (budgetBeans.get(0).getDateId() == mCurrentSelectedDate){
-                    //根据selectedDate去查询这个时间段的账单数据
-                    //首先判断这是selectedDate是哪个时间段
-                    if (mCurrentSelectedDate == 1){
-                        //今天
-                        mSelectedExpendData = mProductViewModel.getReceiptAndProductByDate(System.currentTimeMillis(), System.currentTimeMillis());
-                    }else if (mCurrentSelectedDate == 2){
-                        //本周
-                        mSelectedExpendData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getTimesWeekMorning().getTime(), DateUtils.getTimesWeekNight().getTime());
-                    }else if (mCurrentSelectedDate == 3){
-                        //本月
-                        mSelectedExpendData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getTimesMonthMorning().getTime(), DateUtils.getTimesMonthnight().getTime());
-                    }else if (mCurrentSelectedDate == 4){
-                        //本季
-                        mSelectedExpendData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getCurrentQuarterStartTime().getTime(),DateUtils.getCurrentQuarterEndTime().getTime());
-                    }else {
-                        //本年
-                        mSelectedExpendData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getCurrentYearStartTime().getTime(), DateUtils.getCurrentYearEndTime().getTime());
-                    }
-                    mSelectedExpendData.observe(owner, new Observer<List<ReceiptAndProduct>>() {
-                        @Override
-                        public void onChanged(List<ReceiptAndProduct> receiptAndProducts) {
-                            //数据到了,组装数据
-                            List<BudgetInfo> budgetInfos = changeBudgetBean(budgetBeans, receiptAndProducts);
-                            mCallback.onCurBudgetInfoLoaded(budgetInfos);
-                            mCallback.onTotalExpendLoaded(mTotalExpend);
-                        }
-                    });
+        selectedBudgetList.observe(owner, budgetBeans -> {
+            //TODO:这里每次都会刷新两次，并且其中一次的budgetBeans的dateId和mCurrentSelectedDate不一样，所以这里才加了这个判断，希望后面能来搞清楚为什么会这样
+            if (budgetBeans.get(0).getDateId() == mCurrentSelectedDate){
+                //根据selectedDate去查询这个时间段的账单数据
+                //首先判断这是selectedDate是哪个时间段
+                if (mCurrentSelectedDate == 1){
+                    //今天
+                    mSelectedExpendData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getTodayStartTime(), DateUtils.getTodayEndTime());
+                }else if (mCurrentSelectedDate == 2){
+                    //本周
+                    mSelectedExpendData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getTimesWeekMorning().getTime(), DateUtils.getTimesWeekNight().getTime());
+                }else if (mCurrentSelectedDate == 3){
+                    //本月
+                    mSelectedExpendData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getTimesMonthMorning().getTime(), DateUtils.getTimesMonthnight().getTime());
+                }else if (mCurrentSelectedDate == 4){
+                    //本季
+                    mSelectedExpendData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getCurrentQuarterStartTime().getTime(),DateUtils.getCurrentQuarterEndTime().getTime());
+                }else {
+                    //本年
+                    mSelectedExpendData = mProductViewModel.getReceiptAndProductByDate(DateUtils.getCurrentYearStartTime().getTime(), DateUtils.getCurrentYearEndTime().getTime());
                 }
-
+                mSelectedExpendData.observe(owner, receiptAndProducts -> {
+                    //数据到了,组装数据
+                    List<BudgetInfo> budgetInfos = changeBudgetBean(budgetBeans, receiptAndProducts);
+                    mCallback.onCurBudgetInfoLoaded(budgetInfos);
+                    mCallback.onTotalExpendLoaded(mTotalExpend);
+                });
             }
+
         });
     }
 

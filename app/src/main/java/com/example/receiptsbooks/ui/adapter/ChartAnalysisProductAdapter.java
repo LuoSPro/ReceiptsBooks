@@ -46,6 +46,8 @@ public class ChartAnalysisProductAdapter extends RecyclerView.Adapter<ChartAnaly
         this.mBudgetInfos.clear();
         this.mBudgetInfos.addAll(budgetInfos);
         this.mTotalPrice = totalPrice;
+        //界面更新
+        notifyDataSetChanged();
     }
 
     public class InnerHolder extends RecyclerView.ViewHolder {

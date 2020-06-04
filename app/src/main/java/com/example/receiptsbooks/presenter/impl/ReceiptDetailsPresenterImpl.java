@@ -2,12 +2,10 @@ package com.example.receiptsbooks.presenter.impl;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.receiptsbooks.presenter.IReceiptDetailsPresenter;
 import com.example.receiptsbooks.room.bean.ProductBean;
-import com.example.receiptsbooks.room.bean.ReceiptAndProduct;
 import com.example.receiptsbooks.room.bean.ReceiptInfoBean;
 import com.example.receiptsbooks.room.viewmodel.ProductViewModel;
 import com.example.receiptsbooks.room.viewmodel.ReceiptInfoViewModel;
@@ -21,16 +19,15 @@ public class ReceiptDetailsPresenterImpl implements IReceiptDetailsPresenter {
 
     @Override
     public void getReceiptInfoById(Fragment fragment, LifecycleOwner owner, int receiptId) {
-        mReceiptDetailsCallback.onLoading();
-        if (mProductViewModel == null){
+        if (mReceiptDetailsCallback != null) {
+            mReceiptDetailsCallback.onLoading();
+        }
+        if (mProductViewModel == null) {
             createProductViewModel(fragment);
         }
-        mProductViewModel.getReceiptInfoById(receiptId).observe(owner, new Observer<ReceiptAndProduct>() {
-            @Override
-            public void onChanged(ReceiptAndProduct receiptAndProduct) {
-                if (mReceiptDetailsCallback != null){
-                    mReceiptDetailsCallback.onReceiptAndProductLoaded(receiptAndProduct);
-                }
+        mProductViewModel.getReceiptInfoById(receiptId).observe(owner, receiptAndProduct -> {
+            if (mReceiptDetailsCallback != null){
+                mReceiptDetailsCallback.onReceiptAndProductLoaded(receiptAndProduct);
             }
         });
     }

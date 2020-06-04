@@ -132,7 +132,12 @@ public class BudgetContentAdapter extends RecyclerView.Adapter<BudgetContentAdap
                 budgetItem.setBudgetStatus(BudgetInfo.BudgetStatus.OVERSPEND);
                 mBudgetProgressPb.setProgressDrawable(mContext.getDrawable(R.drawable.custom_progress_bg_excess));
                 mBudgetBalanceTv.setText(new DecimalFormat("0.00").format(budgetItem.getBudgetBalance()-budgetItem.getBudgetMoney()));
+            }else if (budgetItem.getBudgetProgress()>0){
+                budgetItem.setBudgetStatus(BudgetInfo.BudgetStatus.BALANCE);
+                mBudgetProgressPb.setProgress(budgetItem.getBudgetProgress());
+                mBudgetBalanceTv.setText(new DecimalFormat("0.00").format(budgetItem.getBudgetMoney()-budgetItem.getBudgetBalance()));
             }else{
+                budgetItem.setBudgetStatus(BudgetInfo.BudgetStatus.EXPEND);
                 mBudgetProgressPb.setProgress(budgetItem.getBudgetProgress());
                 mBudgetBalanceTv.setText(new DecimalFormat("0.00").format(budgetItem.getBudgetBalance()));
             }

@@ -17,8 +17,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment{
-    //当前状态
-    private State currentState = State.NONE;
     private View mSuccessView;
     private View mErrorView;
     private View mLoadingView;
@@ -54,10 +52,8 @@ public abstract class BaseFragment extends Fragment{
 
     /**
      * 加载各种状态的View
-     * @param inflater
-     * @param container
      */
-    protected void loadStatusView(LayoutInflater inflater, ViewGroup container) {
+    private void loadStatusView(LayoutInflater inflater, ViewGroup container) {
         //成功的view
         mSuccessView = loadSuccessView(inflater, container);
         mBaseContainer.addView(mSuccessView);
@@ -78,33 +74,27 @@ public abstract class BaseFragment extends Fragment{
 
     /**
      * 子类通过这个方法来切换状态页面即可
-     * @param state
      */
     public void setUpState(State state){
-        this.currentState = state;
-        mSuccessView.setVisibility(currentState == State.SUCCESS ? View.VISIBLE : View.GONE);
-        mLoadingView.setVisibility(currentState == State.LOADING ? View.VISIBLE : View.GONE);
-        mErrorView.setVisibility(currentState == State.NETWORK_ERROR ? View.VISIBLE : View.GONE);
-        mEmptyView.setVisibility(currentState == State.EMPTY ? View.VISIBLE : View.GONE);
+        //当前状态
+        mSuccessView.setVisibility(state == State.SUCCESS ? View.VISIBLE : View.GONE);
+        mLoadingView.setVisibility(state == State.LOADING ? View.VISIBLE : View.GONE);
+        mErrorView.setVisibility(state == State.NETWORK_ERROR ? View.VISIBLE : View.GONE);
+        mEmptyView.setVisibility(state == State.EMPTY ? View.VISIBLE : View.GONE);
     }
 
     /**
      * 1.因为每个子类的Fragment都有onCreateView，所以把里面的代码抽取到BaseFragment中，可以节省代码
      * 2.如果把这里的方法设置成抽象类，让子类覆写，那么子类都要去inflate，还不如就直接在baseFragment中做了，方便管理
-     * @return
-     * @param inflater
-     * @param container
+     * @return view
      */
-    protected View loadSuccessView(LayoutInflater inflater, ViewGroup container){
+    private View loadSuccessView(LayoutInflater inflater, ViewGroup container){
         int resId = getRootViewResId();
         return inflater.inflate(resId,container,false);
     }
 
     /**
      * 加载loading界面
-     * @param inflater
-     * @param container
-     * @return
      */
     protected View loadLoadingView(LayoutInflater inflater, ViewGroup container) {
         return inflater.inflate(R.layout.fragment_loading,container,false);
@@ -112,9 +102,6 @@ public abstract class BaseFragment extends Fragment{
 
     /**
      * 网络错误
-     * @param inflater
-     * @param container
-     * @return
      */
     protected View loadEmptyView(LayoutInflater inflater, ViewGroup container){
         return inflater.inflate(R.layout.fragment_empty,container,false);
@@ -122,11 +109,8 @@ public abstract class BaseFragment extends Fragment{
 
     /**
      * 内容为空
-     * @param inflater
-     * @param container
-     * @return
      */
-    protected View loadErrorView(LayoutInflater inflater, ViewGroup container){
+    private View loadErrorView(LayoutInflater inflater, ViewGroup container){
         return inflater.inflate(R.layout.fragment_network_error,container,false);
     }
 
@@ -162,7 +146,6 @@ public abstract class BaseFragment extends Fragment{
 
     /**
      * 这里直接让子类覆写，返回各自的布局id，这都是原子操作，比在子类中使用inflate性能强
-     * @return
      */
     protected abstract int getRootViewResId();
 
