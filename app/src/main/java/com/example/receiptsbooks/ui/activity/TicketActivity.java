@@ -74,7 +74,7 @@ public class TicketActivity extends BaseActivity implements ITicketPagerCallback
         }
         LogUtils.d(this,"mHasTaoBaoApp ==> " + mHasTaoBaoApp);
         //根据这个结果去修改UI
-        mCopyOrOpenBtn.setText(mHasTaoBaoApp ? "打开淘宝领卷":"复制淘口令");
+        mCopyOrOpenBtn.setText(mHasTaoBaoApp ? "打开淘宝领券":"复制淘口令");
     }
 
     @Override

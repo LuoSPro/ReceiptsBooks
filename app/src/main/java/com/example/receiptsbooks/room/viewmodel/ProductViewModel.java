@@ -53,6 +53,10 @@ public class ProductViewModel extends AndroidViewModel {
         mProductRepository.updateProduct(productBeans);
     }
 
+    public LiveData<List<ReceiptAndProduct>> getReceiptAndProductByDate(String type,long beginDate, long endDate) {
+        return mProductRepository.getReceiptAndProductByDateLive(type,beginDate,endDate);
+    }
+
     public LiveData<List<ReceiptAndProduct>> getReceiptAndProductByDate(long beginDate, long endDate) {
         return mProductRepository.getReceiptAndProductByDateLive(beginDate,endDate);
     }

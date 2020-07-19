@@ -1,5 +1,6 @@
 package com.example.receiptsbooks.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import com.example.receiptsbooks.utils.SizeUtils;
 import com.example.receiptsbooks.view.IReceiptInfoCallback;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,11 +133,14 @@ public class ReceiptInfoActivity extends BaseActivity implements IReceiptInfoCal
                 setDataToView(receiptInfo,products);
             }
         }
-
     }
 
     private void onSaveClick() {
         //保存数据
+        //如果是手动记账，那么这里的receiptPhotoPath肯定为null
+        if (mReceiptImagePath == null){
+            mReceiptImagePath = "";
+        }
         mReceiptInfo.setReceiptPhoto(mReceiptImagePath);
         mReceiptInfoPresenter.saveReceiptToDB(this,mReceiptInfo,mReceiptImagePath);
     }
@@ -251,7 +256,8 @@ public class ReceiptInfoActivity extends BaseActivity implements IReceiptInfoCal
         setDataToView(receiptInfo,receiptInfo.getTotalProduct());
     }
 
-    private void setDataToView(ReceiptInfo receiptInfo,List<? extends IBaseProduct> products) {
+    @SuppressLint("SetTextI18n")
+    private void setDataToView(ReceiptInfo receiptInfo, List<? extends IBaseProduct> products) {
         this.mReceiptInfo = receiptInfo;
         //设置图片
         mReceiptInfo.setReceiptPhoto(mReceiptImagePath);
@@ -264,7 +270,7 @@ public class ReceiptInfoActivity extends BaseActivity implements IReceiptInfoCal
             }
         }
         mTypeView.setTextList(list,false);
-        mTotalPriceTv.setText("总价: " + receiptInfo.getTotalPrice());
+        mTotalPriceTv.setText("总价: " + new DecimalFormat("0.00").format(receiptInfo.getTotalPrice()));
         mDateTv.setText("时间: " + DateUtils.dateToString(DateUtils.stringToData(receiptInfo.getDate()),false));
         LogUtils.d(ReceiptInfoActivity.this,"receipt save date ============> " + DateUtils.stringToData(receiptInfo.getDate()).getTime());
         mCountTv.setText("商品数量: " + products.size());

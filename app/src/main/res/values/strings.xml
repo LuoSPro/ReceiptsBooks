@@ -52,9 +52,9 @@
     <string name="text_budget_center_date_select_month">本月</string>
     <string name="text_budget_center_date_select_quarter">本季</string>
     <string name="text_budget_center_date_select_year">本年</string>
-    <string name="text_home_cur_month_expend">6月支出</string>
+    <string name="text_home_cur_month_expend">本月支出</string>
     <string name="text_home_cur_month_balance_default">0.00</string>
-    <string name="text_home_cur_month_balance">6月余额</string>
+    <string name="text_home_cur_month_balance">本月余额</string>
     <string name="text_home_cur_month_expend_default">0.00</string>
     <string name="text_home_today_expend_tips">今日支出￥</string>
     <string name="text_home_today_expend_default">0.00</string>

@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.example.receiptsbooks.R;
 import com.example.receiptsbooks.utils.CameraFilePathUtil;
 import com.example.receiptsbooks.utils.LogUtils;
@@ -26,6 +27,7 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zhihu.matisse.internal.utils.MediaStoreCompat;
 
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -155,5 +157,13 @@ public class TestActivity extends AppCompatActivity implements PermissionInterfa
     @Override
     public void requestPermissionsFail() {
         //请求失败
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ImageView imageView = this.findViewById(R.id.test_verify_image);
+        Random random = new Random();
+        Glide.with(this).load("http://10.0.2.2:8888/test/captcha?test=" + random.nextInt()).into(imageView);
     }
 }

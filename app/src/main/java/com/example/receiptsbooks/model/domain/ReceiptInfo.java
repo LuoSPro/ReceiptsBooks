@@ -19,6 +19,7 @@ public class ReceiptInfo implements IBaseReceipt, Parcelable {
      */
 
     private String saveDate;
+    private int status;
     private String receiptDate;
     private double totalPrice;
     private List<String> name;
@@ -48,6 +49,14 @@ public class ReceiptInfo implements IBaseReceipt, Parcelable {
             return new ReceiptInfo[size];
         }
     };
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public String getReceiptPhoto() {
         return receiptPhoto;

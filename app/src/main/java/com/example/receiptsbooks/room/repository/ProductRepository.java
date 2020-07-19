@@ -31,6 +31,10 @@ public class ProductRepository {
         return mProductDao.getReceiptInfoById(receiptId);
     }
 
+    public LiveData<List<ReceiptAndProduct>> getReceiptAndProductByDateLive(String type,long beginDate, long endDate) {
+        return mProductDao.getReceiptAndProductByDate(type,beginDate,endDate);
+    }
+
     public LiveData<List<ReceiptAndProduct>> getReceiptAndProductByDateLive(long beginDate, long endDate) {
         return mProductDao.getReceiptAndProductByDate(beginDate,endDate);
     }

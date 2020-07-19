@@ -52,7 +52,7 @@ public class ListCategoryPagerPresenter implements IListCategoryPagerPresenter {
         }else{
             //根据时间筛选
             assert beginDate != null;
-            LiveData<List<ReceiptAndProduct>> receiptAndProductFromDate = mProductViewModel.getReceiptAndProductByDate(DateUtils.converterDate(beginDate), DateUtils.converterDate(endDate));
+            LiveData<List<ReceiptAndProduct>> receiptAndProductFromDate = mProductViewModel.getReceiptAndProductByDate(category,DateUtils.converterDate(beginDate), DateUtils.converterDate(endDate));
             receiptAndProductFromDate.observe(owner, receiptAndProducts -> {
                 //通知UI层更新数据
                 for (IListCategoryPagerCallback callback : mCallbacks) {

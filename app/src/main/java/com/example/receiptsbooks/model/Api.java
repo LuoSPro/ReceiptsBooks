@@ -21,7 +21,7 @@ import retrofit2.http.Url;
 public interface Api {
 
     @Multipart
-    @POST("test")
+    @POST("upload")
     Call<ReceiptInfo> getReceiptInfo(@Part MultipartBody.Part part);
 
     @GET("discovery/categories")
