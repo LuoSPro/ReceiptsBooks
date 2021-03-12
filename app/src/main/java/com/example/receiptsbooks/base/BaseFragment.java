@@ -28,7 +28,7 @@ public abstract class BaseFragment extends Fragment{
     @OnClick(R.id.network_error_tips)
     public void retry(){
         //点击了重新加载内容
-        LogUtils.d(this,"on click。。。");
+        LogUtils.d( this,"on click。。。");
         onRetryClick();
     }
 

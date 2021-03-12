@@ -23,14 +23,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         //实现清明节灰的效果
         //====================================
-        //ColorMatrix cm = new ColorMatrix();
-        //cm.setSaturation(0);
-        //Paint paint = new Paint();
-        //paint.setColorFilter(new ColorMatrixColorFilter(cm));
-        ////这样改变不了状态栏，所以应该去获取整个Window
-        ////View contentContainer = findViewById(android.R.id.content);
-        //View contentContainer = getWindow().getDecorView();
-        //contentContainer.setLayerType(View.LAYER_TYPE_SOFTWARE,paint);
+//        ColorMatrix cm = new ColorMatrix();
+//        cm.setSaturation(0);
+//        Paint paint = new Paint();
+//        paint.setColorFilter(new ColorMatrixColorFilter(cm));
+//        ////这样改变不了状态栏，所以应该去获取整个Window
+////        View contentContainer = findViewById(android.R.id.content);
+//        View contentContainer = getWindow().getDecorView();
+//        contentContainer.setLayerType(View.LAYER_TYPE_SOFTWARE,paint);
         //==========================================
 
 

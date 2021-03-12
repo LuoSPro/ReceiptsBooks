@@ -91,7 +91,6 @@ public class ListFragment extends BaseFragment implements IListCallback, IListCa
         //TODO:设置起始时间————最好用一个SP去保存最早的时间，然后每次都拿到这里来
         mBeginTimestamp = DateFormatUtils.str2Long("2018-01-01", false);
     }
-
     @Override
     protected View loadRootView(LayoutInflater inflater, ViewGroup container) {
         //由于采用了“填坑”的方式，所以这里要换成自己的父布局
@@ -113,6 +112,7 @@ public class ListFragment extends BaseFragment implements IListCallback, IListCa
         if (mListPresenter != null) {
             mListPresenter.unregisterViewCallback(this);
         }
+
         if (mListCategoryPagerPresenter != null) {
             mListCategoryPagerPresenter.unregisterViewCallback(this);
         }

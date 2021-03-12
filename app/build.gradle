@@ -3,6 +3,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('F:\\Android\\androidDemo\\AndroidAPK_Key\\luo_s_pro_key.jks')
+            storePassword 'Ls12341234'
+            keyAlias = 'LuoSPro'
+            keyPassword 'Ls12341234'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
@@ -14,6 +22,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
     }
 
     buildTypes {

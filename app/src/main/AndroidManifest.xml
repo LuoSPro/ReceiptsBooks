@@ -28,7 +28,7 @@
         <activity android:name="com.example.receiptsbooks.ui.activity.TicketActivity"/>
         <activity android:name="com.example.receiptsbooks.ui.activity.ReceiptInfoActivity"
             android:theme="@style/dialogStyle" />
-        <activity android:name="com.example.receiptsbooks.ui.activity.TestActivity"
+        <activity android:name="com.example.receiptsbooks.ui.activity.MainActivity"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

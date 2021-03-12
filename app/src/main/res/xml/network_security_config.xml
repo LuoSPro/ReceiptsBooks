@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<metwork-security-config>
+<network-security-config>
     <base-config cleartextTrafficPermitted="true"/>
-</metwork-security-config>
+</network-security-config>

@@ -1,6 +1,8 @@
 package com.example.receiptsbooks.presenter.impl;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -26,7 +28,10 @@ import com.example.receiptsbooks.utils.ToastUtil;
 import com.example.receiptsbooks.view.IHomeCallback;
 import com.example.receiptsbooks.view.IReceiptInfoCallback;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.List;
 
@@ -44,6 +49,25 @@ public class ReceiptInfoPresenterImpl implements IReceiptInfoPresenter {
     private ProductViewModel mProductViewModel;
     private Handler mMainThread = new Handler(Looper.getMainLooper());
 
+    private BitmapFactory.Options getBitmapOption(int inSampleSize){
+        System.gc();
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPurgeable = true;
+        options.inSampleSize = inSampleSize;
+        return options;
+    }
+
+    public void saveBitmapFile(Bitmap bitmap,File file){
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * 向服务器请求数据
      * @param filePath 上传的图片路径
@@ -57,6 +81,50 @@ public class ReceiptInfoPresenterImpl implements IReceiptInfoPresenter {
         }
         //组装需要上传的文件
         File file = new File(filePath);
+
+        //压缩算法
+        //=============================================
+//        Bitmap bm = null;
+//        try {
+//            bm= BitmapFactory.decodeFile(filePath);
+//        } catch (Exception e){
+//            Log.e("[Android]", e.getMessage());
+//            e.printStackTrace();
+//        }
+//
+//        //suo
+//        int width = bm.getWidth();
+//        int height = bm.getHeight();
+//        //计算压缩的比率
+//        float scaleWidth= 0.3f;
+//        float scaleHeight=0.3f;
+//        //获取想要缩放的matrix
+//        Matrix matrix = new Matrix();
+//        matrix.postScale(scaleWidth,scaleHeight);
+//        //获取新的bitmap
+//        LogUtils.d(ReceiptInfoPresenterImpl.this,"width is --> " + width);
+//        LogUtils.d(ReceiptInfoPresenterImpl.this,"height is --> " + height);
+//        bm= Bitmap.createBitmap(bm,0,0,width,height,matrix,true);
+//
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        int options_ = 100;
+//
+//        bm.compress(Bitmap.CompressFormat.PNG, options_, baos);//质量压缩方法，把压缩后的数据存放到baos中 (100表示不压缩，0表示压缩到最小)
+//        int baosLength = baos.toByteArray().length;
+//        while (baosLength / 1024 > 1000) {//循环判断如果压缩后图片是否大于maxMemmorrySize,大于继续压缩
+//            baos.reset();//重置baos即让下一次的写入覆盖之前的内容
+//            options_ = Math.max(0, options_ - 10);//图片质量每次减少10
+//            bm.compress(Bitmap.CompressFormat.JPEG, options_, baos);//将压缩后的图片保存到baos中
+//            baosLength = baos.toByteArray().length;
+//            if (options_ == 0)//如果图片的质量已降到最低则，不再进行压缩
+//                break;
+//        }
+//
+//        byte[] b = baos.toByteArray();
+//        LogUtils.d(ReceiptInfoPresenterImpl.this,"byte is --> " + b.length);
+//        saveBitmapFile(BitmapFactory.decodeByteArray(b,0,b.length),file);
+        //=============================================
+
         RequestBody body = RequestBody.create(MediaType.parse("image/jpg"),file);
         MultipartBody.Part part = MultipartBody.Part.createFormData("file","file",body);
         Retrofit retrofit = RetrofitManager.getInstance().getReceiptInfoRetrofit();

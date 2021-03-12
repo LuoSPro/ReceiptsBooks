@@ -2,6 +2,7 @@ package com.example.receiptsbooks.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.Editable;
@@ -116,20 +117,21 @@ public class BudgetCenterFragment extends BaseFragment implements BudgetContentA
         mGrayLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPopupWindow.getContentView().startAnimation(AnimationUtil.createOutAnimation(getContext(), fromYDelta));
-                mPopupWindow.getContentView().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //popwindow隐藏
-                        mPopupWindow.dismiss();
-                    }
-                }, AnimationUtil.ANIMATION_OUT_TIME);
+                dismissPopupWindow(getContext());
             }
         });
     }
 
     @Override
     protected void initListener() {
+        mGrayLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPopWindowShowing) {
+                    dismissPopupWindow(getContext());
+                }
+            }
+        });
         mBudgetAdapter.setOnBudgetItemClickListener(this);
         mBackIv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,13 +158,26 @@ public class BudgetCenterFragment extends BaseFragment implements BudgetContentA
             @Override
             public void onClick(View v) {
                 if (!isPopWindowShowing) {
-                    //如果window已经展示出来，那么就隐藏
                     //否则展示window
                     showPopupWindow();
+                }else {
+                    //如果window已经展示出来，那么就隐藏
+                    dismissPopupWindow(getContext());
                 }
             }
         });
 
+    }
+
+    private void dismissPopupWindow(Context mainActivity) {
+        mPopupWindow.getContentView().startAnimation(AnimationUtil.createOutAnimation(mainActivity, fromYDelta));
+        mPopupWindow.getContentView().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //popwindow隐藏
+                mPopupWindow.dismiss();
+            }
+        }, AnimationUtil.ANIMATION_OUT_TIME);
     }
 
     private void showRefreshDialog() {
@@ -235,11 +250,11 @@ public class BudgetCenterFragment extends BaseFragment implements BudgetContentA
 
         mPopupWindow = new PopupWindow(contentView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-        //如果设置了这两个属性，那么就不能有收回view的动画了，以为点击事件被popWindow消费了，我们的灰色层再也接收不到点击事件
+        //如果设置了这两个属性，那么就不能有收回view的动画了，因为点击事件被popWindow消费了，我们的灰色层再也接收不到点击事件
         //将这两个属性设置为false，使点击popupwindow外面其他地方不会消失
-        mPopupWindow.setOutsideTouchable(true);
+        //mPopupWindow.setOutsideTouchable(true);
         //设置popupWindow.setFocusable(true); 这样才能让popupWindow里面的布局控件获得点击的事件，否则就被它的父亲view给拦截了。
-        mPopupWindow.setFocusable(true);
+        //mPopupWindow.setFocusable(true);
         //灰色背景可见
         mGrayLayout.setVisibility(View.VISIBLE);
         //获取popupwindow高度确定动画开始位置
@@ -352,14 +367,7 @@ public class BudgetCenterFragment extends BaseFragment implements BudgetContentA
     @Override
     public void onDateItemClick(int position) {
         //隐藏选择（只有这里才能用动画的形式消失，不然其他地方都不能监听到点击事件，进而无法用动画）
-        mPopupWindow.getContentView().startAnimation(AnimationUtil.createOutAnimation(getContext(), fromYDelta));
-        mPopupWindow.getContentView().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //popwindow隐藏
-                mPopupWindow.dismiss();
-            }
-        }, AnimationUtil.ANIMATION_OUT_TIME);
+        dismissPopupWindow(getContext());
         //如果选择的是上次已经选择了的时间段，就没必要更新
         if (mCurrentSelectedDate == position+1){
             return;

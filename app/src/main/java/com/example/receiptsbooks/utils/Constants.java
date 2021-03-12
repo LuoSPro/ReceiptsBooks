@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Constants {
     //base url
-    public static final String BASE_RECEIPT_INFO_URL = "http://47.99.243.39:8082/";
+    public static final String BASE_RECEIPT_INFO_URL = "http://192.168.137.254:8082/";
     public static final String BASE_SOB_URL = "https://api.sunofbeach.net/shop/";
     public static final String KEY_RECEIPT_PHOTO = "receiptPhoto";
     //home pager fragment bundle key

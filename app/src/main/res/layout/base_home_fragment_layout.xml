@@ -112,6 +112,7 @@
 
             </RelativeLayout>
 
+
         </com.example.receiptsbooks.ui.custom.BgRelativeLayout>
 
         <LinearLayout
